@@ -1,26 +1,46 @@
 .tarjeta{
-    margin-top: 20px;
-    max-width: 80%;
+    margin-top: 2%;
+    max-width: 90%;
 }
 
-.flex{
+.flexible{
     display: flex;
     align-items: flex-start;
+    justify-items: flex-start;
+}
+
+.flexcard{
+    display: flex;
+    align-items: flex-start;
+    margin: 0.5%;
 }
 
 .titulo{
-    margin-left: 30px;
-    font-size: 40px;
-}
-
-.subtitulo{
-    margin-left: 50px;
+    align-items: flex-start;
+    font-size: 200%;
+    margin-left: 2%;
 }
 
 .ubicacio{
-    font-size: 12px;
-    margin-left: 30px;
+    font-size: 80%;
+    margin-top: -1%;
 }
-.contenerdorFormularioCrearOferta{
-    margin:10px;
+
+p{
+    color: mediumblue;
+}
+
+.descripcion{
+    font-size: 90%;
+    margin-top: -1%;
+}
+
+.texto{
+    width: 70%;
+    margin-left: 5%;
+    text-align: left;
+}
+
+.foto{
+    border-radius: 0.3em;
 }
