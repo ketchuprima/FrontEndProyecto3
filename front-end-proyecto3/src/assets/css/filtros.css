@@ -1,0 +1,11 @@
+.rowFiltros{
+    padding: 10px !important;
+}
+
+.filtrosCard{
+    padding: 10px;
+}
+
+.containerBotonesFiltro{
+    display: flex;
+}
