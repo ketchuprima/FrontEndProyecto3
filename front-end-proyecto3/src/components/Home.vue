@@ -4,17 +4,16 @@
       v-model="buscador"
       :append-icon="'search'"
       label="Buscador de ofertas"
-      @click="buscar()"
     ></v-text-field>
     <v-row>
       <v-icon>fas fa-search</v-icon>
     </v-row>
 
     <v-row>
-      <v-col cols="3">
+      <v-col cols="12" lg="4">
         <Filtros></Filtros>
       </v-col>
-      <v-col>
+      <v-col cols="12" lg="8">
         <ListaOfertas></ListaOfertas>
       </v-col>
     </v-row>
@@ -43,11 +42,12 @@ export default {
   components: {
     ListaOfertas,
     Filtros,
-    ModalCrearOferta
+    ModalCrearOferta,
   },
   data() {
     return {
       crearOferta: false,
+      buscador:false
     };
   },
   methods:{

@@ -1,6 +1,6 @@
 <template>
   <div class="text-xs-center">
-    <v-dialog v-model="crearOferta" width="500">
+    <v-dialog persistent v-model="crearOferta" width="800">
       <v-card>
         <v-card-title class="headline grey lighten-2" primary-title>
           Crear una oferta
@@ -9,23 +9,44 @@
         <div class="contenerdorFormularioCrearOferta">
           <v-row>
             <v-col cols="12"
+              ><v-text-field label="Nombre de la empresa"></v-text-field
+            ></v-col>
+            <v-col cols="12"
               ><v-text-field label="Titulo de la oferta"></v-text-field
             ></v-col>
-            <v-col cols="6"></v-col>
+            <v-col cols="12"
+              ><v-textarea label="Descripción de la oferta"></v-textarea
+            ></v-col>
+            <v-col cols="6">
+              <v-text-field label="Ubicación"></v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-select :items="categorias" label="Categoria"></v-select>
+            </v-col>
+                        <v-col cols="12"
+              ><v-text-field  label="Email de contacto"></v-text-field 
+            ></v-col>
           </v-row>
-          <v-text-field></v-text-field>
         </div>
 
         <v-divider></v-divider>
 
         <v-card-actions>
+          <v-btn
+            class="white--text"
+            color="#272727"
+            tile
+            x-large
+            @click="clickCancelar()"
+          >
+            cancelar
+          </v-btn>
           <v-spacer></v-spacer>
           <v-btn
             class="white--text"
             color="#272727"
             tile
             x-large
-            block
             @click="clickCrear()"
           >
             I accept
@@ -39,10 +60,18 @@
 export default {
   name: "ModalCrearOferta",
   props: ["crearOferta"],
+  data() {
+    return {
+      categorias: ["DAM", "DAW", "ASIX", "SMX"],
+    };
+  },
   methods: {
+    clickCancelar() {
+      this.$emit("crearOferta", false);
+    },
     clickCrear() {
       console.log("manolo");
-      this.$emit("crearOferta", false);
+      this.clickCancelar();
     },
   },
 };

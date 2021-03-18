@@ -1,28 +1,37 @@
 <template>
   <v-card class="filtrosCard">
     <v-row class="rowFiltros">
-      <v-col cols="6">
-        <v-select :items="categorias" outlined label="Categoria"></v-select>
+      <v-col sm="12" md="6">
+        <v-select
+          v-model="categoria"
+          :items="categorias"
+          outlined
+          label="Categoria"
+        ></v-select>
       </v-col>
-      <v-col cols="6">
+      <v-col sm="12" md="6">
         <v-select
           :items="ordenar"
           outlined
+          v-model="ordenarValue"
           label="Ordenar por fecha"
         ></v-select>
       </v-col>
-      <v-col cols="6">
-        <v-text-field label="Ciudad"></v-text-field>
+      <v-col sm="12" md="6">
+        <v-text-field v-model="ciudad" label="Ciudad"></v-text-field>
       </v-col>
-      <v-col cols="6">
-        <v-text-field label="Empresa"></v-text-field>
+      <v-col sm="12" md="6">
+        <v-text-field v-model="empresa" label="Empresa"></v-text-field>
       </v-col>
     </v-row>
-    <div class="containerBotonesFiltro">
-      <v-btn>Formatear</v-btn>
-      <v-spacer></v-spacer>
-      <v-btn>Filtrar</v-btn>
-    </div>
+    <v-row>
+      <v-col>
+        <v-btn @click="formatear()">Formatear</v-btn>
+      </v-col>
+      <v-col>
+        <v-btn>Filtrar</v-btn>
+      </v-col>
+    </v-row>
   </v-card>
 </template>
 
@@ -33,7 +42,19 @@ export default {
     return {
       categorias: ["DAM", "DAW", "ASIX", "SMX"],
       ordenar: ["Ascendente", "Descendente"],
+      categoria: null,
+      ordenarValue: null,
+      ciudad: null,
+      empresa: null,
     };
+  },
+  methods: {
+    formatear() {
+      this.categoria = null;
+      this.ordenar = null;
+      this.ciudad = null;
+      this.empresa = null;
+    },
   },
 };
 </script>
