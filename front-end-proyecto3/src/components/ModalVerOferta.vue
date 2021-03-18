@@ -1,31 +1,24 @@
 <template>
-<div class="text-xs-center">
+  <div class="text-xs-center">
     <v-dialog persistent v-model="check" width="800">
       <v-card>
         <v-card-title class="headline grey lighten-2" primary-title>
-          Crear una oferta
+          Cafetero
         </v-card-title>
 
         <div class="contenerdorFormularioCrearOferta">
           <v-row>
             <v-col cols="12"
-              ><v-text-field label="Nombre de la empresa"></v-text-field
+              ><v-img
+                class="foto"
+                lazy-src="https://picsum.photos/id/11/10/6"
+                max-height="300"
+                max-width="300"
+                src="https://picsum.photos/id/11/500/300"
+              ></v-img
             ></v-col>
-            <v-col cols="12"
-              ><v-text-field label="Titulo de la oferta"></v-text-field
-            ></v-col>
-            <v-col cols="12"
-              ><v-textarea label="Descripción de la oferta"></v-textarea
-            ></v-col>
-            <v-col cols="6">
-              <v-text-field label="Ubicación"></v-text-field>
+            <v-col><div class="text--primary">gdshdfhfsahsfjgfj</div>
             </v-col>
-            <v-col cols="6">
-              <v-select :items="categorias" label="Categoria"></v-select>
-            </v-col>
-                        <v-col cols="12"
-              ><v-text-field  label="Email de contacto"></v-text-field 
-            ></v-col>
           </v-row>
         </div>
 
@@ -39,7 +32,7 @@
             x-large
             @click="clickCancelar()"
           >
-            cancelar
+            Cancelar
           </v-btn>
           <v-spacer></v-spacer>
           <v-btn
@@ -49,7 +42,7 @@
             x-large
             @click="clickCrear()"
           >
-            I accept
+            Apuntarse
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -58,10 +51,10 @@
 </template>
 <script>
 export default {
-    data(){
-        return{
-            check:true
-        }
-    }
-}
+  data() {
+    return {
+      check: true,
+    };
+  },
+};
 </script>
