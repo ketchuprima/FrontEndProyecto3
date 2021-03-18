@@ -1,8 +1,67 @@
 <template>
-    <div></div>
+<div class="text-xs-center">
+    <v-dialog persistent v-model="check" width="800">
+      <v-card>
+        <v-card-title class="headline grey lighten-2" primary-title>
+          Crear una oferta
+        </v-card-title>
+
+        <div class="contenerdorFormularioCrearOferta">
+          <v-row>
+            <v-col cols="12"
+              ><v-text-field label="Nombre de la empresa"></v-text-field
+            ></v-col>
+            <v-col cols="12"
+              ><v-text-field label="Titulo de la oferta"></v-text-field
+            ></v-col>
+            <v-col cols="12"
+              ><v-textarea label="Descripción de la oferta"></v-textarea
+            ></v-col>
+            <v-col cols="6">
+              <v-text-field label="Ubicación"></v-text-field>
+            </v-col>
+            <v-col cols="6">
+              <v-select :items="categorias" label="Categoria"></v-select>
+            </v-col>
+                        <v-col cols="12"
+              ><v-text-field  label="Email de contacto"></v-text-field 
+            ></v-col>
+          </v-row>
+        </div>
+
+        <v-divider></v-divider>
+
+        <v-card-actions>
+          <v-btn
+            class="white--text"
+            color="#272727"
+            tile
+            x-large
+            @click="clickCancelar()"
+          >
+            cancelar
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn
+            class="white--text"
+            color="#272727"
+            tile
+            x-large
+            @click="clickCrear()"
+          >
+            I accept
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 <script>
 export default {
-    
+    data(){
+        return{
+            check:true
+        }
+    }
 }
 </script>
