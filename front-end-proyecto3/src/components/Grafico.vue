@@ -11,6 +11,7 @@
     :fill="fill"
     :type="type"
     :auto-line-width="autoLineWidth"
+    color="black"
     auto-draw
   ></v-sparkline>
 </template>
@@ -33,7 +34,7 @@
       lineCap: 'round',
       gradient: gradients[5],
       value: [50,20,100,4],
-      labels:["Manolo", "Pescado", "Platino 5", "Xiaomi (carita refachera)"],
+      labels:["DAW", "ASIX", "DAM", "SMX"],
       gradientDirection: 'top',
       gradients,
       fill: false,
