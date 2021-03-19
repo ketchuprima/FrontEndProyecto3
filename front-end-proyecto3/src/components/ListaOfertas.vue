@@ -33,7 +33,8 @@ export default {
           titol: "Cafetero",
           descripcio: "pedazo de trabajo jamau",
           ubicacio: "Barcelona",
-          estat: "publicada"
+          estat: "publicada",
+          data: "5 Enero 2015"
         },
         {
           id: 2,
@@ -41,6 +42,7 @@ export default {
           descripcio: "pedazo de trabajo premo",
           ubicacio: "Barcelona",
           estat: "publicada",
+          data: "5 Enero 2015"
         },
         {
           id: 3,
@@ -48,6 +50,7 @@ export default {
           descripcio: "pedazo de xdd idjbhogsdbghbdohbgdsbgosdb hfogbsdhgb bodhbgosdhog odsbohbodshgodsfghidbsiohbdisoboidsbh",
           ubicacio: "Barcelona",
           estat: "publicada",
+          data: "5 Enero 2015"
         },
         {
           id: 4,
@@ -55,6 +58,7 @@ export default {
           descripcio: "pedazo de xdd idjbhogsdbghbdohbgdsbgosdb hfogbsdhgb bodhbgosdhog odsbohbodshgodsfghidbsiohbdisoboidsbh",
           ubicacio: "Madrid",
           estat: "publicada",
+          data: "5 Enero 2015"
         },
       ],
     };

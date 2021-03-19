@@ -6,44 +6,27 @@
           Cafetero
         </v-card-title>
 
-        <div class="contenerdorFormularioCrearOferta">
+        <div class="flex">
           <v-row>
-            <v-col cols="12"
-              ><v-img
-                class="foto"
-                lazy-src="https://picsum.photos/id/11/10/6"
-                max-height="300"
-                max-width="300"
-                src="https://picsum.photos/id/11/500/300"
-              ></v-img
-            ></v-col>
-            <v-col><div class="text--primary">gdshdfhfsahsfjgfj</div>
+            <v-col cols="4">
+              <div>
+                <v-img class="img" lazy-src="https://picsum.photos/id/11/10/6" max-height="340" max-width="340" src="https://picsum.photos/id/11/500/300"></v-img>
+                <div class="ubi"><li>{{oferta.ubicacio}}</li></div>
+                <div class="data"><li>{{oferta.data}}</li></div>
+              </div>
+            </v-col>
+            <v-col cols="8" class="flex">
+              <div class="desc">{{oferta.descripcio}}</div>
             </v-col>
           </v-row>
         </div>
 
-        <v-divider></v-divider>
+        <v-divider class="separacion"></v-divider>
 
         <v-card-actions>
-          <v-btn
-            class="white--text"
-            color="#272727"
-            tile
-            x-large
-            @click="clickCancelar()"
-          >
-            Cancelar
-          </v-btn>
+          <v-btn class="white--text boton" color="#272727" tile x-large @click="clickCancelar()">Cancelar</v-btn>
           <v-spacer></v-spacer>
-          <v-btn
-            class="white--text"
-            color="#272727"
-            tile
-            x-large
-            @click="clickCrear()"
-          >
-            Apuntarse
-          </v-btn>
+          <v-btn class="white--text boton" color="#272727" tile x-large @click="clickCrear()">Apuntarse</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -53,6 +36,14 @@
 export default {
   data() {
     return {
+      oferta: {
+          id: 1,
+          titol: "Cafetero",
+          descripcio: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+          ubicacio: "Barcelona",
+          estat: "publicada",
+          data: "22 Mayo 2020",
+      },
       check: true,
     };
   },
