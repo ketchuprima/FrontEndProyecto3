@@ -1,7 +1,7 @@
 <template>
   <div class="portada">
     <header class="portadaHeader">
-    <v-btn color="blue" tile x-large>Eres empresa?</v-btn>
+    <v-btn color="blue" tile x-large @click="modalEmpresa = !modalEmpresa">Eres empresa?</v-btn>
     </header>
     <v-row>
       <v-col class="column" sm="12" md="6" style="padding-right:0px;">
@@ -14,6 +14,8 @@
         <div class="containerGrafico">
             <h2 class="titleContainer">Numero de las ofertas</h2>
             <Tabla></Tabla>
+                <ModalEmpresa v-on:cerrarModal="cerrarModal" :dialog="modalEmpresa"></ModalEmpresa>
+
         </div>
       </v-col>
     </v-row>
@@ -22,15 +24,23 @@
 <script>
 import Grafico from "./Grafico.vue";
 import Tabla from "./Tabla.vue"
+import ModalEmpresa from "./AuthenticationEmpresaModal"
 export default {
   name: "portada",
   components: {
     Grafico,
-    Tabla
+    Tabla,
+    ModalEmpresa
       },
   data(){
     return{
-      dialog:false
+      dialog:false,
+      modalEmpresa:false
+    }
+  },
+  methods:{
+    cerrarModal(){
+      this.modalEmpresa=false
     }
   }
 };
