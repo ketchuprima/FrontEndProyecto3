@@ -5,12 +5,12 @@
       <v-list-item three-line>
         <v-list-item-content>
           <div class="flexcard">
-            <div class="img">
-              <v-img class="foto" lazy-src="https://picsum.photos/id/11/10/6" max-height="190" max-width="190" src="https://picsum.photos/id/11/500/300"></v-img>
+            <div>
+              <v-img class="foto" lazy-src="https://picsum.photos/id/11/10/6" max-height="220" max-width="220" src="https://picsum.photos/id/11/500/300"></v-img>
             </div>
             <div class="texto">
               <v-list-item-title class="titulo">{{oferta.titol}}</v-list-item-title>
-              <v-list-item class="ubicacio"><p>{{oferta.ubicacio}}</p></v-list-item>
+              <v-list-item class="ubicacio"><p>{{oferta.ubicacio}} | {{oferta.data}}</p></v-list-item>
               <v-list-item class="descripcion">{{oferta.descripcio}}</v-list-item>
             </div>
           </div>
