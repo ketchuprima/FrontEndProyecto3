@@ -14,12 +14,14 @@
         <Filtros></Filtros>
       </v-col>
       <v-col cols="12" lg="8">
-        <ListaOfertas></ListaOfertas>
+        <ListaOfertas v-on:modificarOferta="modificarOferta"></ListaOfertas>
       </v-col>
     </v-row>
 
     <ModalCrearOferta
     :crearOferta="crearOferta"
+    :modo="modo"
+    :idOferta="idOferta"
     v-on:crearOferta="cerrarModal()"
     ></ModalCrearOferta>
     
@@ -27,7 +29,7 @@
       v-if="this.$route.name == 'home'"
       style="height: 100px; position: relative"
     >
-      <v-btn @click="crearOferta = !crearOferta" v-show="!hidden" color="blue" dark absolute top right fab>
+      <v-btn @click="crearOferta = !crearOferta; modo=1" v-show="!hidden" color="blue" dark absolute top right fab>
         <v-icon>mdi-plus</v-icon>
       </v-btn>
     </v-card-text>
@@ -47,12 +49,19 @@ export default {
   data() {
     return {
       crearOferta: false,
-      buscador:false
+      buscador:false,
+      modo:0
     };
   },
   methods:{
       cerrarModal(){
           this.crearOferta=false
+      },
+      modificarOferta(idOferta){
+        this.crearOferta=true;
+        this.modo=2;
+        this.idOferta=idOferta;
+        console.log(idOferta + "modo"+this.modo)
       }
   }
 };

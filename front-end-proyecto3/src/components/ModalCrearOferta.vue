@@ -59,11 +59,16 @@
 <script>
 export default {
   name: "ModalCrearOferta",
-  props: ["crearOferta"],
+  props: ["crearOferta","modo","idOferta"],
   data() {
     return {
       categorias: ["DAM", "DAW", "ASIX", "SMX"],
     };
+  },
+  updated(){
+    if(this.modo==2){
+      console.log("Ha modificar rcack " + this.idOferta)
+    }
   },
   methods: {
     clickCancelar() {

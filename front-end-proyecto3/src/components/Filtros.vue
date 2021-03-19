@@ -1,6 +1,6 @@
 <template>
-  <v-card class="filtrosCard">
-    <v-row class="rowFiltros">
+  <v-card class="filtrosCard" elevation="0" tile>
+    <v-row class="rowFiltros rowGrey">
       <v-col sm="12" md="6">
         <v-select
           v-model="categoria"
@@ -24,12 +24,12 @@
         <v-text-field v-model="empresa" label="Empresa"></v-text-field>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="rowGrey">
       <v-col>
-        <v-btn @click="formatear()">Formatear</v-btn>
+        <v-btn color="blue" @click="formatear()">Formatear</v-btn>
       </v-col>
       <v-col>
-        <v-btn>Filtrar</v-btn>
+        <v-btn color="blue">Filtrar</v-btn>
       </v-col>
     </v-row>
   </v-card>

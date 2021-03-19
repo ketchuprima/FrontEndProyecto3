@@ -1,5 +1,10 @@
 .rowFiltros{
     padding: 10px !important;
+
+}
+.rowGrey{
+    background-color: #f3f3f3;
+
 }
 
 .filtrosCard{

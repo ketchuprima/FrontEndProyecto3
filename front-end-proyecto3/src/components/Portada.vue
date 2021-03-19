@@ -1,18 +1,18 @@
 <template>
-  <div>
+  <div class="portada">
     <header class="portadaHeader">
     <v-btn color="blue" tile x-large>Eres empresa?</v-btn>
     </header>
     <v-row>
-      <v-col class="column" cols="6">
+      <v-col class="column" sm="12" md="6" style="padding-right:0px;">
         <div class="containerGrafico">
-            <h3 class="titleContainer">Grafico de las ofertas</h3>
+            <h2 class="titleContainer">Grafico de las ofertas</h2>
             <Grafico></Grafico>
         </div>
       </v-col>
-      <v-col class="column" cols="5">
+      <v-col class="column" sm="12" md="6" style="padding-left:0px;">
         <div class="containerGrafico">
-            <h3 class="titleContainer">Numero de las ofertas</h3>
+            <h2 class="titleContainer">Numero de las ofertas</h2>
             <Tabla></Tabla>
         </div>
       </v-col>
@@ -27,7 +27,12 @@ export default {
   components: {
     Grafico,
     Tabla
-  },
+      },
+  data(){
+    return{
+      dialog:false
+    }
+  }
 };
 </script>
 <style>
