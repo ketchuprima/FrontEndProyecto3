@@ -21,7 +21,7 @@
                   }}</v-list-item-title>
                   <v-list-item class="ubicacio"
                     ><p>
-                      {{ oferta.ubicacio }} | {{ oferta.data }}
+                      {{ oferta.ubicacio }} | {{ oferta.data_de_publicacio.split(" ")[0] }}
                     </p></v-list-item
                   >
                   <v-list-item class="descripcion">{{
@@ -68,44 +68,9 @@ export default {
     ModalVerOferta,
     ModalCandidatos,
   },
+  props:["ofertas"],
   data() {
     return {
-      ofertas: [
-        {
-          id: 1,
-          titol: "Cafetero",
-          descripcio: "pedazo de trabajo jamau",
-          ubicacio: "Barcelona",
-          estat: "publicada",
-          data: "5 Enero 2015",
-        },
-        {
-          id: 2,
-          titol: "Barredor",
-          descripcio: "pedazo de trabajo premo",
-          ubicacio: "Barcelona",
-          estat: "publicada",
-          data: "5 Enero 2015",
-        },
-        {
-          id: 3,
-          titol: "Pargu",
-          descripcio:
-            "pedazo de xdd idjbhogsdbghbdohbgdsbgosdb hfogbsdhgb bodhbgosdhog odsbohbodshgodsfghidbsiohbdisoboidsbh",
-          ubicacio: "Barcelona",
-          estat: "publicada",
-          data: "5 Enero 2015",
-        },
-        {
-          id: 4,
-          titol: "No me trolees",
-          descripcio:
-            "pedazo de xdd idjbhogsdbghbdohbgdsbgosdb hfogbsdhgb bodhbgosdhog odsbohbodshgodsfghidbsiohbdisoboidsbh",
-          ubicacio: "Madrid",
-          estat: "publicada",
-          data: "5 Enero 2015",
-        },
-      ],
       modalOferta: false,
       modalCandidatura: false,
       idOferta: null,
