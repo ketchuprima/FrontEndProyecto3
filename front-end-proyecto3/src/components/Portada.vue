@@ -1,7 +1,7 @@
 <template>
   <div class="portada">
     <header class="portadaHeader">
-    <v-btn color="blue" tile x-large @click="modalEmpresa = !modalEmpresa">Eres empresa?</v-btn>
+    <v-btn color="blue" tile x-large @click="modalEmpresa = !modalEmpresa">Registra tu empresa</v-btn>
     </header>
     <v-row>
       <v-col class="column" sm="12" md="6" style="padding-right:0px;">
@@ -36,6 +36,11 @@ export default {
     return{
       dialog:false,
       modalEmpresa:false
+    }
+  },
+    created() {
+    if (localStorage.getItem("accessToken") != null) {
+      this.$router.push("/home");
     }
   },
   methods:{
