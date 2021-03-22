@@ -22,11 +22,9 @@ export default {
     },
     methods:{
         async getOfertas(){
-            let res = await axios.get("http://localhost:8080/ofertes/");
-
-            console.log("hola");
+            let res = await axios.get("http://localhost:8080/ofertes/perValidar");
+            
             this.listaOfertas = res.data;
-            console.log(this.listaOfertas);
         }
     },
     mounted(){

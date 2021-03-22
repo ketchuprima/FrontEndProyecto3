@@ -39,64 +39,14 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "ModalCandidatos",
   props: ["modal", "idOferta"],
   data() {
     return {
-      candidatos: [
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-        { nombre: "Jose", email: "jose@gmail.com" },
-      ],
+      candidatos: []
     };
   },
   methods: {
@@ -104,6 +54,15 @@ export default {
       console.log("cerrar");
       this.$emit("cerrarCandidatos");
     },
+    async getCandidatos(){
+      let res = await axios.get("http://localhost:8080/ofertes/" + this.idOferta);
+
+      this.candidatos = res.data;
+    }
   },
+
+  mounted(){
+    this.getCandidatos();
+  }
 };
 </script>

@@ -73,19 +73,13 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
-  props: ["check"],
+  props: ["check", "idOferta"],
   data() {
     return {
-      oferta: {
-        id: 1,
-        titol: "Cafetero",
-        descripcio:
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        ubicacio: "Barcelona",
-        estat: "publicada",
-        data: "22 Mayo 2020",
-      },
+      oferta: null
     };
   },
   methods: {
@@ -93,8 +87,16 @@ export default {
       this.$emit("cerrarOferta");
     },
     clickModificar(){
-      this.$emit("modificarOferta", this.oferta.id)
+      this.$emit("modificarOferta", this.oferta.id);
+    },
+    async getOfertaById(){
+      let res = await axios.get("http://localhost:8080/ofertes/" + this.idOferta);
+
+      this.oferta = res.data;
     }
+  },
+  mounted(){
+    this.getOfertaById();
   },
 };
 </script>

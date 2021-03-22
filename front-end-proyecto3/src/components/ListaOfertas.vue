@@ -46,12 +46,14 @@
       </v-col>
     </v-row>
     <ModalVerOferta
+      v-if="modalOferta"
       :check="modalOferta"
       :idOferta="idOferta"
       v-on:cerrarOferta="cerrarOferta"
       v-on:modificarOferta="modificarOferta"
     ></ModalVerOferta>
     <ModalCandidatos
+      v-if="modalCandidatura"
       :modal="modalCandidatura"
       :idOferta="idOferta"
       v-on:cerrarCandidatos="cerrarCandidatos"
