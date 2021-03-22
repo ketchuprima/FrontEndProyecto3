@@ -32,10 +32,10 @@
                   >Candidaturas</v-btn
                 >
                 <div style="display: flex">
-                  <v-btn color="success" @click="aceptar(oferta)" x-small
+                  <v-btn color="success" @click="aceptar(oferta.id)" x-small
                     >Aceptar</v-btn
                   >
-                  <v-btn color="error" @click="rechazar(oferta)" x-small
+                  <v-btn color="error" @click="rechazar(oferta.id)" x-small
                     >Rechazar</v-btn
                   >
                 </div>
@@ -64,6 +64,7 @@
 <script>
 import ModalCandidatos from "./ModalCandidatos.vue";
 import ModalVerOferta from "./ModalVerOferta.vue";
+import axios from "axios";
 export default {
   name: "listaOfertas",
   components: {
@@ -99,11 +100,22 @@ export default {
       this.modalCandidatura = true;
       this.idOferta = oferta.id;
     },
-    aceptar(oferta) {
-      console.log("aceptar" + oferta);
+    async aceptar(idOferta) {
+      let res = await axios.put("http://localhost:8080/ofertes/actualizarEstado/" + idOferta);
+      
+      if(res.data.message == "ok")
+        this.$emit("recargarPagina");
+      else
+        alert(res.data.message);
+        
     },
-    rechazar(oferta) {
-      console.log("rechazar" + oferta);
+    async rechazar(idOferta) {
+      let res = await axios.delete("http://localhost:8080/ofertes/eliminar/" + idOferta);
+      
+      if(res.data.message == "ok")
+        this.$emit("recargarPagina");
+      else
+        alert(res.data.message);
     },
     modificarOferta(idOferta) {
       this.modalOferta=false;

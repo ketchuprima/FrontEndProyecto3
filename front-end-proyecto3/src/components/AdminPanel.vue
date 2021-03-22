@@ -2,7 +2,7 @@
     <div>
         <h1 class="titleAdmin">Panel de administrador</h1>
         <div class="containerAdmin">
-            <ListaOfertas :ofertas="listaOfertas"></ListaOfertas>
+            <ListaOfertas :ofertas="listaOfertas" v-on:recargarPagina="getOfertas"></ListaOfertas>
         </div>
     </div>
 </template>
