@@ -22,7 +22,7 @@
   </v-app-bar>
 </template>
 <script>
-//import axios from 'axios';
+import axios from 'axios';
 import AuthenticationModal from "./AuthenticationModal.vue";
 export default {
   name: "AppBar",
@@ -47,8 +47,12 @@ export default {
       this.$router.push("/portada");
       this.loged=false;
     },
-    checkUser() {
-      if (localStorage.getItem("accessToken") != null) this.loged = true;
+    async checkUser() {
+      if (localStorage.getItem("accessToken") != null) {
+        this.loged = true;
+        let res = await axios.get("http://localhost:8080/user/getUser", {headers:{Authorization: "Bearer "+localStorage.getItem('accessToken')}})
+        console.log(res.data)
+      }
       else {
         this.loged = false;
         this.$router.push("/portada");
