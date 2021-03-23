@@ -26,8 +26,8 @@
               </thead>
               <tbody>
                 <tr v-for="candidato in candidatos" :key="candidato">
-                  <td>{{ candidato.nombre }}</td>
-                  <td>{{ candidato.email }}</td>
+                  <td>{{ candidato.user.nom }} {{candidato.user.cognoms}}</td>
+                  <td>{{ candidato.user.email }}</td>
                 </tr>
               </tbody>
             </template>
@@ -57,7 +57,8 @@ export default {
     async getCandidatos(){
       let res = await axios.get("http://localhost:8080/ofertes/" + this.idOferta);
 
-      this.candidatos = res.data;
+      this.candidatos = res.data.candidats;
+      console.log(this.candidatos)
     }
   },
 

@@ -28,14 +28,14 @@
                     oferta.descripcio
                   }}</v-list-item>
                 </div>
-                <v-btn color="blue" @click="clickCandidaturas(oferta)" x-small
+                <v-btn color="blue" v-if="adminPanel==false && admin==true" @click="clickCandidaturas(oferta)" x-small
                   >Candidaturas</v-btn
                 >
                 <div style="display: flex">
-                  <v-btn color="success" @click="aceptar(oferta.id)" x-small
+                  <v-btn color="success" v-if="adminPanel==true" @click="aceptar(oferta.id)" x-small
                     >Aceptar</v-btn
                   >
-                  <v-btn color="error" @click="rechazar(oferta.id)" x-small
+                  <v-btn color="error" v-if="adminPanel==true" @click="rechazar(oferta.id)" x-small
                     >Rechazar</v-btn
                   >
                 </div>
@@ -77,10 +77,18 @@ export default {
       modalOferta: false,
       modalCandidatura: false,
       idOferta: null,
+      adminPanel:false,
+      admin:false
+
     };
   },
   mounted() {
     this.metodo();
+    this.checkUser();
+  },
+  updated(){
+    if(this.$route.name=="adminPanel")
+      this.adminPanel=true
   },
   methods: {
     metodo() {
@@ -120,6 +128,13 @@ export default {
     modificarOferta(idOferta) {
       this.modalOferta=false;
       this.$emit("modificarOferta", idOferta)
+    },
+    async checkUser() {
+        let res = await axios.get("http://localhost:8080/users/getUser", {headers:{Authorization: "Bearer "+localStorage.getItem('accessToken')}})
+        for(let i=0; i<res.data.roles.length; i++){
+          if(res.data.roles[i].nombre=="ROLE_ADMIN")
+            this.admin=true
+        }
     },
   },
 };
