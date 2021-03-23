@@ -37,7 +37,7 @@
           </v-btn>
           <v-spacer></v-spacer>
           <v-btn
-            v-if="modo != 2"
+            v-if="modo != 0"
             class="white--text"
             color="#272727"
             tile
@@ -81,12 +81,10 @@ export default {
     };
   },
   updated(){
-    if(!this.modificado){
-      console.log("hola caracola");
-    }
-    else if(this.modo==2){
+    if(this.modo==2){
       this.getOfertaById();
-    }else{
+      this.modo = 0;
+    }else if(this.modo != 0 && this.modo != 2){
       this.titol = "";
       this.descripcio = "";
       this.ubicacio = "";
@@ -94,6 +92,7 @@ export default {
     }
   },
   mounted(){
+    console.log(this.modo);
     this.getCategorias();
   },
   methods: {
@@ -159,9 +158,8 @@ export default {
       }
       );
 
-      if(res.data.message == null)
-        alert(res.data.message);
-    }
+      console.log(res.data);
+    },
   },
 };
 </script>

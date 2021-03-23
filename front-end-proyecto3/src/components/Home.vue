@@ -74,6 +74,7 @@ export default {
             let res = await axios.get("http://localhost:8080/ofertes/");
             
             this.listaOfertas = res.data;
+            console.log(res.data);
       },
       async getEmpresa(){
         let res = await axios.get("http://localhost:8080/empreses/findByUser/" + this.idUsuario);
