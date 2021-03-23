@@ -11,7 +11,7 @@
             dark
             grow
           >
-            <v-tabs-slider color="purple darken-4"></v-tabs-slider>
+            <v-tabs-slider color="blue"></v-tabs-slider>
             <v-tab v-for="i in tabs" :key="i">
               <v-icon large>{{ i.icon }}</v-icon>
               <div class="caption py-1">{{ i.name }}</div>
@@ -50,7 +50,7 @@
                           tile
                           @click="cancelar"
                         >
-                          Cancelar
+                          <z class="textColorWhite"> Cancelar </z>
                         </v-btn>
                       </v-col>
                       <v-spacer></v-spacer>
@@ -63,7 +63,7 @@
                           tile
                           @click="login"
                         >
-                          Login
+                          <z class="textColorWhite"> Login </z>
                         </v-btn>
                       </v-col>
                     </v-row>
@@ -145,7 +145,7 @@
                           tile
                           @click="cancelar"
                         >
-                          Cancelar
+                          <z class="textColorWhite">Cancelar</z>
                         </v-btn>
                       </v-col>
                       <v-spacer></v-spacer>
@@ -157,7 +157,7 @@
                           color="blue"
                           tile
                           @click="signup"
-                          >Sign Up</v-btn
+                          ><z class="textColorWhite">Sign Up</z></v-btn
                         >
                       </v-col>
                     </v-row>
@@ -188,15 +188,16 @@ export default {
     },
     async signup() {
       if (this.$refs.registerForm.validate()) {
-          let res = await axios.post("http://localhost:8080/auth/signup", {
+        let res = await axios.post("http://localhost:8080/auth/signup", {
           email: this.email,
           pass: this.password,
           nom: this.firstName,
           cognoms: this.lastName,
-          telefon: this.telefono
+          telefon: this.telefono,
         });
-        if(res.data.message=="El usuario ha sido registrado correctamente") location.reload();
-        else alert("El registro ha fallado")
+        if (res.data.message == "El usuario ha sido registrado correctamente")
+          location.reload();
+        else alert("El registro ha fallado");
       }
     },
 

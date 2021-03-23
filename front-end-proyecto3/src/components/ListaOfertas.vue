@@ -12,8 +12,10 @@
                       <v-img
                         class="foto"
                         lazy-src="https://picsum.photos/id/11/10/6"
-                        max-height="300"
-                        max-width="300"
+                        min-height="150"
+                        max-height="150"
+                        min-width="150"
+                        max-width="150"
                         src="https://picsum.photos/id/11/500/300"
                       ></v-img>
                     </div>
@@ -43,12 +45,12 @@
                           tile
                           medium
                           depressed
-                          >Candidaturas</v-btn
+                          > <z class="textColorWhite">Candidaturas</z></v-btn
                         >
                         <div style="display: flex">
                           <v-btn
                             color="primary"
-                            style="margin-right:2%;"
+                            style="margin-right: 2%"
                             v-if="adminPanel == true"
                             @click="aceptar(oferta.id)"
                             dark

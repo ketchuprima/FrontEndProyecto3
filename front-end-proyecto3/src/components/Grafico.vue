@@ -1,5 +1,6 @@
 <template>
   <v-sparkline
+    style="margin:10px;"
     :labels="labels"
     :value="value"
     :gradient="gradient"
@@ -11,7 +12,7 @@
     :fill="fill"
     :type="type"
     :auto-line-width="autoLineWidth"
-    color="black"
+    color="#363636"
     auto-draw
   ></v-sparkline>
 </template>
@@ -32,8 +33,7 @@ export default {
     padding: 8,
     lineCap: "round",
     gradient: gradients[5],
-    //value: [50, 20, 100, 4],
-    labels: ["DAW", "ASIX", "DAM", "SMX"],
+    labels: ["DAW", "DAM", "ASIX", "SMX"],
     gradientDirection: "top",
     gradients,
     fill: false,

@@ -11,12 +11,12 @@
             dark
             grow
           >
-            <v-tabs-slider color="purple darken-4"></v-tabs-slider>
+            <v-tabs-slider color="blue"></v-tabs-slider>
             <v-tab v-for="i in tabs" :key="i">
               <v-icon large>{{ i.icon }}</v-icon>
               <div class="caption py-1">{{ i.name }}</div>
             </v-tab>
-           
+
             <v-tab-item>
               <v-card class="px-4">
                 <v-card-text>
@@ -66,7 +66,7 @@
                           required
                         ></v-text-field>
                       </v-col>
-                                            <v-col cols="12">
+                      <v-col cols="12">
                         <v-text-field
                           v-model="emailContacto"
                           :rules="emailRules"
@@ -117,7 +117,7 @@
                           tile
                           @click="cancelar"
                         >
-                          Cancelar
+                          <z class="textColorWhite">Cancelar</z>
                         </v-btn>
                       </v-col>
                       <v-spacer></v-spacer>
@@ -129,7 +129,7 @@
                           color="blue"
                           tile
                           @click="signup"
-                          >Sign Up</v-btn
+                          ><z class="textColorWhite">Sign Up</z></v-btn
                         >
                       </v-col>
                     </v-row>
@@ -144,7 +144,7 @@
   </div>
 </template>
 <script>
-import axios from 'axios';
+import axios from "axios";
 export default {
   name: "AuthenticationModal",
   computed: {
@@ -155,22 +155,26 @@ export default {
   },
   props: ["dialog"],
   methods: {
-     async signup() {
+    async signup() {
       if (this.$refs.registerForm.validate()) {
-          let res = await axios.post("http://localhost:8080/auth/signup", {
-          email: this.email,
-          pass: this.password,
-          nom: this.firstName,
-          cognoms: this.lastName,
-          telefon: this.telefono,
-          nomEmpresa: this.nomEmpresa,
-          tipus: this.tipus,
-          logo: "logo.png",
-          correu: this.emailContacto
-          
-        },{headers:{empresa:true}});
-        if(res.data.message=="El usuario ha sido registrado correctamente") location.reload();
-        else alert("El registro ha fallado")
+        let res = await axios.post(
+          "http://localhost:8080/auth/signup",
+          {
+            email: this.email,
+            pass: this.password,
+            nom: this.firstName,
+            cognoms: this.lastName,
+            telefon: this.telefono,
+            nomEmpresa: this.nomEmpresa,
+            tipus: this.tipus,
+            logo: "logo.png",
+            correu: this.emailContacto,
+          },
+          { headers: { empresa: true } }
+        );
+        if (res.data.message == "El usuario ha sido registrado correctamente")
+          location.reload();
+        else alert("El registro ha fallado");
       }
     },
     async login() {
@@ -182,7 +186,6 @@ export default {
         if (res.data.accessToken != null) {
           localStorage.setItem("accessToken", res.data.accessToken);
           location.reload();
-
         } else {
           alert("El usuario o la contraseña son incorrectos");
         }
@@ -196,23 +199,21 @@ export default {
     },
     cancelar() {
       this.$emit("cerrarModal");
-    }
+    },
   },
   data: () => ({
     tab: 0,
-    tabs: [
-      { name: "Register", icon: "mdi-account-outline" },
-    ],
+    tabs: [{ name: "Register", icon: "mdi-account-outline" }],
     valid: true,
 
     firstName: "",
-    nomEmpresa:"",
-    tipus:"",
-    emailContacto:"",
+    nomEmpresa: "",
+    tipus: "",
+    emailContacto: "",
     lastName: "",
     email: "",
     password: "",
-    telefon:"",
+    telefon: "",
     verify: "",
     loginPassword: "",
     loginEmail: "",

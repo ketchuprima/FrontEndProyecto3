@@ -2,20 +2,20 @@
   <div class="portada">
     <header class="portadaHeader">
       <v-btn color="blue" tile x-large @click="modalEmpresa = !modalEmpresa"
-        >Registra tu empresa</v-btn
+        ><z class="textColorWhite"> Registra tu empresa</z></v-btn
       >
     </header>
     <v-row>
       <v-col class="column" sm="12" md="6" style="padding-right: 0px">
         <div class="containerGrafico">
-          <h2 class="titleContainer">Grafico de las ofertas</h2>
+          <h2 class="titleContainer textColorWhite">Grafico de las ofertas</h2>
           <Grafico
           :value="value"></Grafico>
         </div>
       </v-col>
       <v-col class="column" sm="12" md="6" style="padding-left: 0px">
         <div class="containerGrafico">
-          <h2 class="titleContainer">Numero de las ofertas</h2>
+          <h2 class="titleContainer textColorWhite">Numero de las ofertas</h2>
           <Tabla
           :categorias="categorias"></Tabla>
           <ModalEmpresa
@@ -65,7 +65,7 @@ export default {
       );
       console.log(res.data);
 
-      this.value = [res.data.daw, res.data.asix, res.data.dam, res.data.smix];
+      this.value = [res.data.daw, res.data.dam, res.data.asix, res.data.smix];
       console.log(this.value)
       this.categorias=[{nombre:"DAW", cantidad: res.data.daw}, {nombre:"DAM", cantidad: res.data.dam}, {nombre:"ASIX", cantidad: res.data.asix}, {nombre:"SMX", cantidad: res.data.smix}]
     },
