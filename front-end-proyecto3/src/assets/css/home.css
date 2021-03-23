@@ -38,7 +38,6 @@ p{
 
 .texto{
     width: 70%;
-    margin-left: 5%;
     text-align: left;
 }
 
@@ -49,6 +48,13 @@ p{
 }
 
 /*ModalOferta:*/
+.btnContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    margin-right: 3%;
+}
 
 .desc{
     display: flex;
@@ -101,7 +107,7 @@ p{
     font-size: 240%;
 }
 
-.containerAdmin{
-    margin-left: 20%;
-    margin-right: 20%;
+.botonesContainer{
+    display: flex;
+    align-items: flex-end;
 }

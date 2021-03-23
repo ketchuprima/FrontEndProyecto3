@@ -6,39 +6,73 @@
           <v-list-item three-line>
             <v-list-item-content>
               <div class="flexcard">
-                <div @click="abrirOferta(oferta)">
-                  <v-img
-                    class="foto"
-                    lazy-src="https://picsum.photos/id/11/10/6"
-                    max-height="220"
-                    max-width="220"
-                    src="https://picsum.photos/id/11/500/300"
-                  ></v-img>
-                </div>
-                <div class="texto" @click="abrirOferta(oferta)">
-                  <v-list-item-title class="titulo">{{
-                    oferta.titol
-                  }}</v-list-item-title>
-                  <v-list-item class="ubicacio"
-                    ><p>
-                      {{ oferta.ubicacio }} | {{ oferta.data_de_publicacio.split(" ")[0] }}
-                    </p></v-list-item
-                  >
-                  <v-list-item class="descripcion">{{
-                    oferta.descripcio
-                  }}</v-list-item>
-                </div>
-                <v-btn color="blue" v-if="adminPanel==false && admin==true" @click="clickCandidaturas(oferta)" x-small
-                  >Candidaturas</v-btn
-                >
-                <div style="display: flex">
-                  <v-btn color="success" v-if="adminPanel==true" @click="aceptar(oferta.id)" x-small
-                    >Aceptar</v-btn
-                  >
-                  <v-btn color="error" v-if="adminPanel==true" @click="rechazar(oferta.id)" x-small
-                    >Rechazar</v-btn
-                  >
-                </div>
+                <v-row>
+                  <v-col cols="2">
+                    <div @click="abrirOferta(oferta)">
+                      <v-img
+                        class="foto"
+                        lazy-src="https://picsum.photos/id/11/10/6"
+                        max-height="300"
+                        max-width="300"
+                        src="https://picsum.photos/id/11/500/300"
+                      ></v-img>
+                    </div>
+                  </v-col>
+                  <v-col cols="10">
+                    <div style="display: flex; height: 100%">
+                      <div class="texto" @click="abrirOferta(oferta)">
+                        <v-list-item-title class="titulo">{{
+                          oferta.titol
+                        }}</v-list-item-title>
+                        <v-list-item class="ubicacio"
+                          ><p>
+                            {{ oferta.ubicacio }} |
+                            {{ oferta.data_de_publicacio.split(" ")[0] }}
+                          </p></v-list-item
+                        >
+                        <v-list-item class="descripcion">{{
+                          oferta.descripcio
+                        }}</v-list-item>
+                      </div>
+                      <div class="btnContainer">
+                        <v-spacer></v-spacer>
+                        <v-btn
+                          color="blue"
+                          v-if="adminPanel == false && admin == true"
+                          @click="clickCandidaturas(oferta)"
+                          tile
+                          medium
+                          depressed
+                          >Candidaturas</v-btn
+                        >
+                        <div style="display: flex">
+                          <v-btn
+                            color="primary"
+                            style="margin-right:2%;"
+                            v-if="adminPanel == true"
+                            @click="aceptar(oferta.id)"
+                            dark
+                            tile
+                            >Aceptar
+                            <v-icon dark right>
+                              mdi-checkbox-marked-circle
+                            </v-icon>
+                          </v-btn>
+                          <v-divider vertical></v-divider>
+                          <v-btn
+                            color="red"
+                            v-if="adminPanel == true"
+                            @click="rechazar(oferta.id)"
+                            dark
+                            tile
+                            >Rechazar
+                            <v-icon dark right>mdi-cancel</v-icon>
+                          </v-btn>
+                        </div>
+                      </div>
+                    </div>
+                  </v-col>
+                </v-row>
               </div>
             </v-list-item-content>
           </v-list-item>
@@ -71,24 +105,22 @@ export default {
     ModalVerOferta,
     ModalCandidatos,
   },
-  props:["ofertas"],
+  props: ["ofertas"],
   data() {
     return {
       modalOferta: false,
       modalCandidatura: false,
       idOferta: null,
-      adminPanel:false,
-      admin:false
-
+      adminPanel: false,
+      admin: false,
     };
   },
   mounted() {
     this.metodo();
     this.checkUser();
   },
-  updated(){
-    if(this.$route.name=="adminPanel")
-      this.adminPanel=true
+  updated() {
+    if (this.$route.name == "adminPanel") this.adminPanel = true;
   },
   methods: {
     metodo() {
@@ -109,32 +141,34 @@ export default {
       this.idOferta = oferta.id;
     },
     async aceptar(idOferta) {
-      let res = await axios.put("http://localhost:8080/ofertes/actualizarEstado/" + idOferta);
-      
-      if(res.data.message == "ok")
-        this.$emit("recargarPagina");
-      else
-        alert(res.data.message);
-        
+      let res = await axios.put(
+        "http://localhost:8080/ofertes/actualizarEstado/" + idOferta
+      );
+
+      if (res.data.message == "ok") this.$emit("recargarPagina");
+      else alert(res.data.message);
     },
     async rechazar(idOferta) {
-      let res = await axios.delete("http://localhost:8080/ofertes/eliminar/" + idOferta);
-      
-      if(res.data.message == "ok")
-        this.$emit("recargarPagina");
-      else
-        alert(res.data.message);
+      let res = await axios.delete(
+        "http://localhost:8080/ofertes/eliminar/" + idOferta
+      );
+
+      if (res.data.message == "ok") this.$emit("recargarPagina");
+      else alert(res.data.message);
     },
     modificarOferta(idOferta) {
-      this.modalOferta=false;
-      this.$emit("modificarOferta", idOferta)
+      this.modalOferta = false;
+      this.$emit("modificarOferta", idOferta);
     },
     async checkUser() {
-        let res = await axios.get("http://localhost:8080/users/getUser", {headers:{Authorization: "Bearer "+localStorage.getItem('accessToken')}})
-        for(let i=0; i<res.data.roles.length; i++){
-          if(res.data.roles[i].nombre=="ROLE_ADMIN")
-            this.admin=true
-        }
+      let res = await axios.get("http://localhost:8080/users/getUser", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        },
+      });
+      for (let i = 0; i < res.data.roles.length; i++) {
+        if (res.data.roles[i].nombre == "ROLE_ADMIN") this.admin = true;
+      }
     },
   },
 };

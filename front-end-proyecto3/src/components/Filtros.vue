@@ -51,9 +51,9 @@ export default {
   methods: {
     formatear() {
       this.categoria = null;
-      this.ordenar = null;
       this.ciudad = null;
       this.empresa = null;
+      this.ordenarValue = null;
     },
   },
 };

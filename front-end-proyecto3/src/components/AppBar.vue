@@ -1,16 +1,18 @@
 <template>
   <v-app-bar app>
-    <v-img
-      max-height="60"
-      max-width="60"
-      src="https://cdn.pixabay.com/photo/2017/02/15/00/48/logo-2067396_960_720.png"
-    ></v-img>
+    <router-link to="/home">
+      <v-img
+        max-height="60"
+        max-width="60"
+        src="https://cdn.pixabay.com/photo/2017/02/15/00/48/logo-2067396_960_720.png"
+      ></v-img>
+    </router-link>
     <v-spacer></v-spacer>
     <AuthenticationModal
       :dialog="dialogLogin"
       v-on:cerrarModal="cerrarModal"
     ></AuthenticationModal>
-    <v-btn class="ma-1" v-if="admin==true" @click="redirigirAdminPanel" plain>
+    <v-btn class="ma-1" v-if="admin == true" @click="redirigirAdminPanel" plain>
       Panel de administrador</v-btn
     >
     <v-btn class="ma-1" @click="dialogLogin = true" plain v-if="loged == false">
@@ -22,7 +24,7 @@
   </v-app-bar>
 </template>
 <script>
-import axios from 'axios';
+import axios from "axios";
 import AuthenticationModal from "./AuthenticationModal.vue";
 export default {
   name: "AppBar",
@@ -33,7 +35,7 @@ export default {
     return {
       dialogLogin: false,
       loged: false,
-      admin:false
+      admin: false,
     };
   },
   methods: {
@@ -46,20 +48,22 @@ export default {
     logOut() {
       localStorage.removeItem("accessToken");
       this.$router.push("/portada");
-      this.loged=false;
-      this.admin=false;
+      this.loged = false;
+      this.admin = false;
     },
     async checkUser() {
       if (localStorage.getItem("accessToken") != null) {
         this.loged = true;
-        let res = await axios.get("http://localhost:8080/users/getUser", {headers:{Authorization: "Bearer "+localStorage.getItem('accessToken')}})
-        for(let i=0; i<res.data.roles.length; i++){
-          if(res.data.roles[i].nombre=="ROLE_ADMIN")
-            this.admin=true
+        let res = await axios.get("http://localhost:8080/users/getUser", {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+        });
+        for (let i = 0; i < res.data.roles.length; i++) {
+          if (res.data.roles[i].nombre == "ROLE_ADMIN") this.admin = true;
         }
-        console.log(res.data)
-      }
-      else {
+        console.log(res.data);
+      } else {
         this.loged = false;
         this.$router.push("/portada");
       }
