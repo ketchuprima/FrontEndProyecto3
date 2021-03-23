@@ -23,6 +23,7 @@
     :modo="modo"
     :idOferta="idOferta"
     :idUsuario="idUsuario"
+    :empresa="empresa"
     v-on:crearOferta="cerrarModal()"
     ></ModalCrearOferta>
     
@@ -55,7 +56,8 @@ export default {
       modo:0,
       listaOfertas: [],
       isEmpresa: false,
-      empresa:null
+      empresa:null,
+      idUsuario: 0
     };
   },
   methods:{
@@ -73,21 +75,22 @@ export default {
             
             this.listaOfertas = res.data;
       },
+      async getEmpresa(){
+        let res = await axios.get("http://localhost:8080/empreses/findByUser/" + this.idUsuario);
+
+        this.empresa = res.data;
+      },
       async checkUser() {
         let res = await axios.get("http://localhost:8080/users/getUser", {headers:{Authorization: "Bearer "+localStorage.getItem('accessToken')}}) 
 
         for(let i=0; i<res.data.roles.length; i++){
           if(res.data.roles[i].nombre=="ROLE_EMPRESA"){
             this.isEmpresa=true
-            this.getEmpresa(res.data.id);
+            this.idUsuario = res.data.id;
+            this.getEmpresa();
           }
         }
       },
-      async getEmpresa(idUsuario){
-        let res = await axios.get("http://localhost:8080/" + idUsuario);
-
-        console.log(res.data);
-      }
   },
 
   mounted(){
