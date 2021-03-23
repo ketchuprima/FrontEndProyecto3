@@ -18,7 +18,7 @@
               <v-text-field label="Ubicación" v-model="ubicacio"></v-text-field>
             </v-col>
             <v-col cols="6">
-              <v-select :items="categorias" label="Categoria" v-model="categoria"></v-select>
+              <v-select :items="categoriasSelect" label="Categoria" v-model="categoria"></v-select>
             </v-col>
           </v-row>
         </div>
@@ -55,15 +55,17 @@ import axios from "axios";
 
 export default {
   name: "ModalCrearOferta",
-  props: ["crearOferta","modo","idOferta", "idUsuario"],
+  props: ["crearOferta","modo","idOferta", "idUsuario", "empresa"],
   data() {
     return {
       categorias: [],
+      categoriasSelect: [],
       titol:"",
       descripcio:"",
       data_de_publicacio:"",
       ubicacio:"",
-      categoria:""
+      categoria:"",
+      idCategoria:0
     };
   },
   updated(){
@@ -71,30 +73,44 @@ export default {
       console.log("Ha modificar rcack " + this.idOferta)
     }
   },
+  mounted(){
+    this.getCategorias();
+    console.log(this.empresa);
+  },
   methods: {
     clickCancelar() {
       this.$emit("crearOferta", false);
     },
     clickCrear() {
-      console.log("manolo");
+      this.createOferta();
       this.clickCancelar();
     },
-    /*async createOferta(){
-      let res = await axios.post("http://localhost:8080/ofertes/crear", 
+    async createOferta(){
+      for(let i = 0; i<this.categorias.length; i++){
+        if(this.categoria == this.categorias[i].nom)
+          this.idCategoria = this.categorias[i].id;
+      }
+      
+      await axios.post("http://localhost:8080/ofertes/crear", 
         {
           titol : this.titol,
           descripcio : this.descripcio,
           ubicacio : this.ubicacio,
-          categoria : this.categoria
+          categoria : {id : this.idCategoria, nombre : this.categoria},
           empresa : this.empresa
-
         }
       );
-    }*/
+
+
+    },
     async getCategorias(){
-      let res = await axios.get("http://localhost/categories/");
+      let res = await axios.get("http://localhost:8080/categories/");
 
       this.categorias = res.data;
+
+      for(let i=0; i<res.data.length; i++)
+        this.categoriasSelect.push(res.data[i].nom);
+        console.log(this.categoriasSelect);
     }
   },
 };
