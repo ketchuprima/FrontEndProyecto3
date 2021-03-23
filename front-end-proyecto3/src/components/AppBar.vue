@@ -47,6 +47,7 @@ export default {
       localStorage.removeItem("accessToken");
       this.$router.push("/portada");
       this.loged=false;
+      this.admin=false;
     },
     async checkUser() {
       if (localStorage.getItem("accessToken") != null) {

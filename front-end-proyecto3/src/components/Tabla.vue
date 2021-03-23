@@ -25,13 +25,9 @@ export default {
   name: "tabla",
   data() {
     return {
-      categorias: [
-        { nombre: "DAW", cantidad: 50 },
-        { nombre: "ASIX", cantidad: 20 },
-        { nombre: "DAM", cantidad: 100 },
-        { nombre: "SMX", cantidad: 4 },
-      ],
+      
     };
   },
+  props:['categorias']
 };
 </script>
