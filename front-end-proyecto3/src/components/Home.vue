@@ -14,7 +14,7 @@
         <Filtros></Filtros>
       </v-col>
       <v-col cols="12" lg="8">
-        <ListaOfertas v-on:modificarOferta="modificarOferta"></ListaOfertas>
+        <ListaOfertas :ofertas="listaOfertas" v-on:modificarOferta="modificarOferta"></ListaOfertas>
       </v-col>
     </v-row>
 
@@ -22,6 +22,7 @@
     :crearOferta="crearOferta"
     :modo="modo"
     :idOferta="idOferta"
+    :idUsuario="idUsuario"
     v-on:crearOferta="cerrarModal()"
     ></ModalCrearOferta>
     
@@ -29,7 +30,7 @@
       v-if="this.$route.name == 'home'"
       style="height: 100px; position: relative"
     >
-      <v-btn @click="crearOferta = !crearOferta; modo=1" v-show="!hidden" color="blue" dark absolute top right fab>
+      <v-btn v-if="isEmpresa" @click="crearOferta = !crearOferta; modo=1" v-show="!hidden" color="blue" dark absolute top right fab>
         <v-icon>mdi-plus</v-icon>
       </v-btn>
     </v-card-text>
@@ -39,6 +40,7 @@
 import ModalCrearOferta from './ModalCrearOferta.vue'
 import ListaOfertas from "./ListaOfertas.vue";
 import Filtros from "./Filtros.vue";
+import axios from "axios";
 export default {
   name: "Home",
   components: {
@@ -50,7 +52,10 @@ export default {
     return {
       crearOferta: false,
       buscador:false,
-      modo:0
+      modo:0,
+      listaOfertas: [],
+      isEmpresa: false,
+      empresa:null
     };
   },
   methods:{
@@ -62,7 +67,32 @@ export default {
         this.modo=2;
         this.idOferta=idOferta;
         console.log(idOferta + "modo"+this.modo)
+      },
+      async getOfertas(){
+            let res = await axios.get("http://localhost:8080/ofertes/");
+            
+            this.listaOfertas = res.data;
+      },
+      async checkUser() {
+        let res = await axios.get("http://localhost:8080/users/getUser", {headers:{Authorization: "Bearer "+localStorage.getItem('accessToken')}}) 
+
+        for(let i=0; i<res.data.roles.length; i++){
+          if(res.data.roles[i].nombre=="ROLE_EMPRESA"){
+            this.isEmpresa=true
+            this.getEmpresa(res.data.id);
+          }
+        }
+      },
+      async getEmpresa(idUsuario){
+        let res = await axios.get("http://localhost:8080/" + idUsuario);
+
+        
       }
+  },
+
+  mounted(){
+    this.checkUser();
+    this.getOfertas();
   }
 };
 </script>
