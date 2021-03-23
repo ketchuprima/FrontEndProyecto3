@@ -46,7 +46,6 @@
                         <v-btn
                           x-large
                           block
-                          :disabled="!valid"
                           color="blue"
                           tile
                           @click="cancelar"
@@ -142,7 +141,6 @@
                         <v-btn
                           x-large
                           block
-                          :disabled="!valid"
                           color="blue"
                           tile
                           @click="cancelar"
