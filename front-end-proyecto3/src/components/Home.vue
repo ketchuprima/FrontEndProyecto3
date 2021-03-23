@@ -2,11 +2,10 @@
   <v-container>
     <v-text-field
       v-model="buscador"
-      :append-icon="'search'"
+      :append-icon="lupa"
       label="Buscador de ofertas"
     ></v-text-field>
     <v-row>
-      <v-icon>fas fa-search</v-icon>
     </v-row>
 
     <v-row>
@@ -42,6 +41,8 @@ import ModalCrearOferta from './ModalCrearOferta.vue'
 import ListaOfertas from "./ListaOfertas.vue";
 import Filtros from "./Filtros.vue";
 import axios from "axios";
+import { mdiMagnify } from '@mdi/js';
+
 export default {
   name: "Home",
   components: {
@@ -54,6 +55,7 @@ export default {
       crearOferta: false,
       buscador:false,
       modo:0,
+      lupa: mdiMagnify,
       listaOfertas: [],
       isEmpresa: false,
       empresa:null,

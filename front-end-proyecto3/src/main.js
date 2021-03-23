@@ -31,5 +31,6 @@ const router = new VueRouter({
 new Vue({
   vuetify,
   router,
+  iconfont: 'mdiSvg',
   render: h => h(App)
 }).$mount('#app')
