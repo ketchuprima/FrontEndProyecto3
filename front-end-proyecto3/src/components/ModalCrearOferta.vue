@@ -9,23 +9,17 @@
         <div class="contenerdorFormularioCrearOferta">
           <v-row>
             <v-col cols="12"
-              ><v-text-field label="Nombre de la empresa"></v-text-field
+              ><v-text-field label="Titulo de la oferta" v-model="titol"></v-text-field
             ></v-col>
             <v-col cols="12"
-              ><v-text-field label="Titulo de la oferta"></v-text-field
-            ></v-col>
-            <v-col cols="12"
-              ><v-textarea label="Descripción de la oferta"></v-textarea
+              ><v-textarea label="Descripción de la oferta" v-model="descripcio"></v-textarea
             ></v-col>
             <v-col cols="6">
-              <v-text-field label="Ubicación"></v-text-field>
+              <v-text-field label="Ubicación" v-model="ubicacio"></v-text-field>
             </v-col>
             <v-col cols="6">
-              <v-select :items="categorias" label="Categoria"></v-select>
+              <v-select :items="categorias" label="Categoria" v-model="categoria"></v-select>
             </v-col>
-                        <v-col cols="12"
-              ><v-text-field  label="Email de contacto"></v-text-field 
-            ></v-col>
           </v-row>
         </div>
 
@@ -57,12 +51,19 @@
   </div>
 </template>
 <script>
+import axios from "axios";
+
 export default {
   name: "ModalCrearOferta",
-  props: ["crearOferta","modo","idOferta"],
+  props: ["crearOferta","modo","idOferta", "idUsuario"],
   data() {
     return {
-      categorias: ["DAM", "DAW", "ASIX", "SMX"],
+      categorias: [],
+      titol:"",
+      descripcio:"",
+      data_de_publicacio:"",
+      ubicacio:"",
+      categoria:""
     };
   },
   updated(){
@@ -78,6 +79,23 @@ export default {
       console.log("manolo");
       this.clickCancelar();
     },
+    /*async createOferta(){
+      let res = await axios.post("http://localhost:8080/ofertes/crear", 
+        {
+          titol : this.titol,
+          descripcio : this.descripcio,
+          ubicacio : this.ubicacio,
+          categoria : this.categoria
+          empresa : this.empresa
+
+        }
+      );
+    }*/
+    async getCategorias(){
+      let res = await axios.get("http://localhost/categories/");
+
+      this.categorias = res.data;
+    }
   },
 };
 </script>

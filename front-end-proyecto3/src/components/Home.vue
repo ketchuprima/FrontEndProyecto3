@@ -86,7 +86,7 @@ export default {
       async getEmpresa(idUsuario){
         let res = await axios.get("http://localhost:8080/" + idUsuario);
 
-        
+        console.log(res.data);
       }
   },
 
