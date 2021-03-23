@@ -33,17 +33,28 @@
             x-large
             @click="clickCancelar()"
           >
-            cancelar
+            Cancelar
           </v-btn>
           <v-spacer></v-spacer>
           <v-btn
+            v-if="modo != 2"
             class="white--text"
             color="#272727"
             tile
             x-large
             @click="clickCrear()"
           >
-            I accept
+            Crear
+          </v-btn>
+          <v-btn
+            v-else
+            class="white--text"
+            color="#272727"
+            tile
+            x-large
+            @click="clickActualizar()"
+          >
+            Actualizar
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -62,20 +73,28 @@ export default {
       categoriasSelect: [],
       titol:"",
       descripcio:"",
-      data_de_publicacio:"",
       ubicacio:"",
       categoria:"",
-      idCategoria:0
+      idCategoria:0,
+      empresaSinActualizar: null,
+      modificado: false
     };
   },
   updated(){
-    if(this.modo==2){
-      console.log("Ha modificar rcack " + this.idOferta)
+    if(!this.modificado){
+      console.log("hola caracola");
+    }
+    else if(this.modo==2){
+      this.getOfertaById();
+    }else{
+      this.titol = "";
+      this.descripcio = "";
+      this.ubicacio = "";
+      this.categoria = null;
     }
   },
   mounted(){
     this.getCategorias();
-    console.log(this.empresa);
   },
   methods: {
     clickCancelar() {
@@ -90,7 +109,7 @@ export default {
         if(this.categoria == this.categorias[i].nom)
           this.idCategoria = this.categorias[i].id;
       }
-      
+
       await axios.post("http://localhost:8080/ofertes/crear", 
         {
           titol : this.titol,
@@ -101,7 +120,10 @@ export default {
         }
       );
 
-
+      this.titol = "";
+      this.descripcio = "";
+      this.ubicacio = "";
+      this.categoria = null;
     },
     async getCategorias(){
       let res = await axios.get("http://localhost:8080/categories/");
@@ -111,6 +133,34 @@ export default {
       for(let i=0; i<res.data.length; i++)
         this.categoriasSelect.push(res.data[i].nom);
         console.log(this.categoriasSelect);
+    },
+    async getOfertaById(){
+      let res = await axios.get("http://localhost:8080/ofertes/" + this.idOferta);
+
+      if(res.data != null)
+        this.titol = res.data.titol;
+        this.descripcio = res.data.descripcio;
+        this.ubicacio = res.data.ubicacio;
+        this.empresaSinActualizar = res.data.empresa;
+        this.categoria = res.data.categoria.nom;
+    },
+    async clickActualizar(){
+      for(let i = 0; i<this.categorias.length; i++){
+        if(this.categoria == this.categorias[i].nom)
+          this.idCategoria = this.categorias[i].id;
+      }
+
+      let res = await axios.put("http://localhost:8080/ofertes/actualizar/" + this.idOferta, 
+      {
+        titol : this.titol,
+        descripcio : this.descripcio,
+        ubicacio : this.ubicacio,
+        categoria : {id : this.idCategoria, nombre : this.categoria},
+      }
+      );
+
+      if(res.data.message == null)
+        alert(res.data.message);
     }
   },
 };
