@@ -10,7 +10,7 @@
       :dialog="dialogLogin"
       v-on:cerrarModal="cerrarModal"
     ></AuthenticationModal>
-    <v-btn class="ma-1" @click="redirigirAdminPanel" plain>
+    <v-btn class="ma-1" v-if="admin==true" @click="redirigirAdminPanel" plain>
       Panel de administrador</v-btn
     >
     <v-btn class="ma-1" @click="dialogLogin = true" plain v-if="loged == false">
@@ -33,6 +33,7 @@ export default {
     return {
       dialogLogin: false,
       loged: false,
+      admin:false
     };
   },
   methods: {
@@ -50,7 +51,11 @@ export default {
     async checkUser() {
       if (localStorage.getItem("accessToken") != null) {
         this.loged = true;
-        let res = await axios.get("http://localhost:8080/user/getUser", {headers:{Authorization: "Bearer "+localStorage.getItem('accessToken')}})
+        let res = await axios.get("http://localhost:8080/users/getUser", {headers:{Authorization: "Bearer "+localStorage.getItem('accessToken')}})
+        for(let i=0; i<res.data.roles.length; i++){
+          if(res.data.roles[i].nombre=="ROLE_ADMIN")
+            this.admin=true
+        }
         console.log(res.data)
       }
       else {
