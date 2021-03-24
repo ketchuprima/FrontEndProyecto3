@@ -2,6 +2,7 @@
   <div id="app">
     <v-app>
       <v-dialog v-model="dialog" persistent max-width="600px" min-width="360px">
+        <AlertError v-if="message != null" :message="message"></AlertError>
         <div>
           <v-tabs
             v-model="tab"
@@ -172,56 +173,21 @@
   </div>
 </template>
 <script>
+import AlertError from "./AlertError.vue";
 import axios from "axios";
 export default {
   name: "AuthenticationModal",
+  components: {
+    AlertError,
+  },
   computed: {
     passwordMatch() {
       return () =>
         this.password === this.verify || "Las contraseñas deben coincidir";
     },
   },
-  props: ["dialog"],
-  methods: {
-    cancelar() {
-      this.$emit("cerrarModal");
-    },
-    async signup() {
-      if (this.$refs.registerForm.validate()) {
-        let res = await axios.post("http://localhost:8080/auth/signup", {
-          email: this.email,
-          pass: this.password,
-          nom: this.firstName,
-          cognoms: this.lastName,
-          telefon: this.telefono,
-        });
-        if (res.data.message == "El usuario ha sido registrado correctamente")
-          location.reload();
-        else alert("El registro ha fallado");
-      }
-    },
 
-    async login() {
-      if (this.$refs.loginForm.validate()) {
-        let res = await axios.post("http://localhost:8080/auth/signin", {
-          email: this.loginEmail,
-          pass: this.loginPassword,
-        });
-        if (res.data.accessToken != null) {
-          localStorage.setItem("accessToken", res.data.accessToken);
-          location.reload();
-        } else {
-          alert("El usuario o la contraseña son incorrectos");
-        }
-      }
-    },
-    reset() {
-      this.$refs.form.reset();
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation();
-    },
-  },
+  props: ["dialog"],
   data: () => ({
     tab: 0,
     tabs: [
@@ -239,21 +205,71 @@ export default {
     loginEmail: "",
     loginEmailRules: [
       (v) => !!v || "Required",
-      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      (v) => /.+@.+\..+/.test(v) || "El email tiene que ser valido",
     ],
     emailRules: [
       (v) => !!v || "Required",
-      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      (v) => /.+@.+\..+/.test(v) || "El email tiene que ser valido",
     ],
 
     show1: false,
     show2: false,
     show3: false,
-
+    message: null,
     rules: {
-      required: (value) => !!value || "Required.",
-      min: (v) => (v && v.length >= 8) || "Min 8 characters",
+      required: (value) => !!value || "Requerido.",
+      min: (v) => (v && v.length >= 8) || "Minimo 8 caracteres",
     },
   }),
+
+  methods: {
+    cancelar() {
+      (this.telefono = null),
+        (this.firstName = null),
+        (this.lastName = null),
+        (this.email = null),
+        (this.password = null),
+        (this.verify = null),
+        (this.loginPassword = null),
+        (this.loginEmail = null),
+        this.message =null;
+        this.$emit("cerrarModal");
+    },
+    async signup() {
+      if (this.$refs.registerForm.validate()) {
+        let res = await axios.post("http://localhost:8080/auth/signup", {
+          email: this.email,
+          pass: this.password,
+          nom: this.firstName,
+          cognoms: this.lastName,
+          telefon: this.telefono,
+        });
+        if (res.data.message == "El usuario ha sido registrado correctamente")
+          location.reload();
+        else this.message = res.data.message;
+      }
+    },
+
+    async login() {
+      if (this.$refs.loginForm.validate()) {
+        let res = await axios.post("http://localhost:8080/auth/signin", {
+          email: this.loginEmail,
+          pass: this.loginPassword,
+        });
+        if (res.data.accessToken != null) {
+          localStorage.setItem("accessToken", res.data.accessToken);
+          location.reload();
+        } else {
+          this.message = res.data.message;
+        }
+      }
+    },
+    reset() {
+      this.$refs.form.reset();
+    },
+    resetValidation() {
+      this.$refs.form.resetValidation();
+    },
+  },
 };
 </script>
