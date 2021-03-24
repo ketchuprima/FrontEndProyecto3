@@ -6,7 +6,7 @@
           Crear una oferta
         </v-card-title>
 
-        <div class="contenerdorFormularioCrearOferta">
+        <div class="contenerdorFormularioCrearOferta" style="margin: 3%">
           <v-row>
             <v-col cols="12"
               ><v-text-field label="Titulo de la oferta" v-model="titol"></v-text-field
@@ -28,7 +28,7 @@
         <v-card-actions>
           <v-btn
             class="white--text"
-            color="#272727"
+            color="blue"
             tile
             x-large
             @click="clickCancelar()"
@@ -39,7 +39,7 @@
           <v-btn
             v-if="modo != 0"
             class="white--text"
-            color="#272727"
+            color="blue"
             tile
             x-large
             @click="clickCrear()"
@@ -49,7 +49,7 @@
           <v-btn
             v-else
             class="white--text"
-            color="#272727"
+            color="blue"
             tile
             x-large
             @click="clickActualizar()"
