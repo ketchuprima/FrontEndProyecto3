@@ -2,6 +2,8 @@
   <div id="app">
     <v-app>
       <v-dialog v-model="dialog" persistent max-width="600px" min-width="360px">
+        <AlertError v-if="message != null" :message="message"></AlertError>
+
         <div>
           <v-tabs
             v-model="tab"
@@ -145,6 +147,8 @@
 </template>
 <script>
 import axios from "axios";
+import AlertError from "./AlertError.vue";
+
 export default {
   name: "AuthenticationModal",
   computed: {
@@ -152,6 +156,9 @@ export default {
       return () =>
         this.password === this.verify || "Las contraseñas deben coincidir";
     },
+  },
+    components: {
+    AlertError,
   },
   props: ["dialog"],
   methods: {
@@ -174,7 +181,7 @@ export default {
         );
         if (res.data.message == "El usuario ha sido registrado correctamente")
           location.reload();
-        else alert("El registro ha fallado");
+        else this.message = res.data.message;
       }
     },
     async login() {
@@ -198,6 +205,16 @@ export default {
       this.$refs.form.resetValidation();
     },
     cancelar() {
+      this.telefono = null;
+      this.firstName = null;
+      this.lastName = null;
+      this.email = null;
+      this.password = null;
+      this.verify = null;
+      this.nomEmpresa = null;
+      this.tipus = null;
+      this.emailContacto = null;
+      this.message =null;
       this.$emit("cerrarModal");
     },
   },
@@ -215,12 +232,6 @@ export default {
     password: "",
     telefon: "",
     verify: "",
-    loginPassword: "",
-    loginEmail: "",
-    loginEmailRules: [
-      (v) => !!v || "Required",
-      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
-    ],
     emailRules: [
       (v) => !!v || "Required",
       (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
@@ -229,6 +240,7 @@ export default {
     show1: false,
     show2: false,
     show3: false,
+    message: null,
 
     rules: {
       required: (value) => !!value || "Required.",
