@@ -1,12 +1,12 @@
 <template>
   <v-app-bar app>
-    <router-link to="/home">
+    
       <v-img
         max-height="60"
         max-width="60"
+        @click="redirigitHome()"
         src="https://cdn.pixabay.com/photo/2017/02/15/00/48/logo-2067396_960_720.png"
       ></v-img>
-    </router-link>
     <v-spacer></v-spacer>
     <AuthenticationModal
       :dialog="dialogLogin"
@@ -39,6 +39,11 @@ export default {
     };
   },
   methods: {
+    redirigitHome(){
+            location.reload()
+
+      this.$router.push("/home")
+    },
     cerrarModal() {
       this.dialogLogin = false;
     },
