@@ -96,6 +96,7 @@ export default {
       let res = await axios.get("http://localhost:8080/ofertes/");
 
       this.listaOfertas = res.data;
+      console.log(this.listaOfertas)
     },
     async getEmpresa() {
       let res = await axios.get(

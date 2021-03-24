@@ -26,11 +26,17 @@
                         <v-list-item-title class="titulo">{{
                           oferta.titol
                         }}</v-list-item-title>
+
                         <v-list-item class="ubicacio"
-                          ><p>
+                          >
+                          <div style="display:flex; flex-direction:column;">
+                          <p>{{oferta.empresa.nom}}</p>
+                          <p>
                             {{ oferta.ubicacio }} |
                             {{ oferta.data_de_publicacio.split(" ")[0] }}
-                          </p></v-list-item
+                          </p>
+                          
+                          </div></v-list-item
                         >
                         <v-list-item class="descripcion">{{
                           oferta.descripcio
