@@ -26,6 +26,12 @@
     font-size: 80%;
     margin-top: -1%;
 }
+.nuevo{
+    background-color: aqua;
+}
+.antiguo{
+    background-color:brown;
+}
 
 p{
     color: mediumblue;

@@ -1,12 +1,13 @@
 <template>
   <div class="flexible">
     <v-row
-      ><v-col cols="12" v-for="oferta in ofertas" :key="oferta.id">
-        <v-card class="mx-auto tarjeta" outlined>
+      ><v-col cols="12" v-for="oferta in ofertas" :key="oferta.id" >
+        <v-card class="mx-auto tarjeta" outlined v-bind:class="{nuevo: oferta.antiguedad<='15',
+            antiguo: oferta.antiguedad>'15'}">
           <v-list-item three-line>
             <v-list-item-content>
-              <div class="flexcard">
-                <v-row>
+              <div >
+                <v-row  >
                   <v-col cols="2">
                     <div @click="abrirOferta(oferta)">
                       <v-img
@@ -124,16 +125,20 @@ export default {
     };
   },
   mounted() {
-    this.metodo();
+    var date = new Date()
+    var date2 = new Date()
+    for(let i =0; i<this.ofertas.length;i++){
+      date2 = new Date(this.ofertas[i].data_de_publicacio)
+      this.ofertas[i].antiguedad=date.getDate()-date2.getDate()
+    }
+    console.log("ofertas")
+    console.log(this.ofertas)
     this.checkUser();
   },
   updated() {
     if (this.$route.name == "adminPanel") this.adminPanel = true;
   },
   methods: {
-    metodo() {
-      console.log(this.ofertas);
-    },
     abrirOferta(oferta) {
       this.modalOferta = true;
       this.idOferta = oferta.id;
