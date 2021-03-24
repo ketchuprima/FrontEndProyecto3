@@ -5,12 +5,14 @@
     </v-col>
     <v-col cols="12">
       <ListaOfertas
-        v-if="listaOfertas!=null"
+        v-if="listaOfertas.length != 0"
         :ofertas="listaOfertas"
         v-on:recargarPagina="getOfertas"
         v-on:modificarOferta="modificarOferta"
       ></ListaOfertas>
-      <div v-else> Manolo</div>
+      <div v-else>
+        <span>No hay ofertas para validar</span>
+      </div>
     </v-col>
     <ModalCrearOferta
       :modo="modo"
