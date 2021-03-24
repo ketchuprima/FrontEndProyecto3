@@ -8,9 +8,15 @@
         v-if="listaOfertas!=null"
         :ofertas="listaOfertas"
         v-on:recargarPagina="getOfertas"
+        v-on:modificarOferta="modificarOferta"
       ></ListaOfertas>
       <div v-else> Manolo</div>
     </v-col>
+    <ModalCrearOferta
+      :modo="modo"
+      :idOferta="idOferta"
+      v-on:crearOferta="cerrarModal()"
+    ></ModalCrearOferta>
   </v-row>
 </template>
 <script>
@@ -25,9 +31,14 @@ export default {
   data() {
     return {
       listaOfertas: null,
+      idOferta:null,
+      modo:null
     };
   },
   methods: {
+        cerrarModal() {
+      this.crearOferta = false;
+    },
     async getOfertas() {
       let res = await axios.get("http://localhost:8080/ofertes/perValidar");
 
@@ -35,6 +46,12 @@ export default {
       if(this.listaOfertas[0].descripcio==null)
         this.listaOfertas=null
     },
+    modificarOferta(idOferta) {
+      this.crearOferta = true;
+      this.modo = 2;
+      this.idOferta = idOferta;
+      console.log(idOferta + "modo" + this.modo);
+    }
   },
   mounted() {
     this.getOfertas();

@@ -38,7 +38,7 @@
           Formatear</z></v-btn>
       </v-col>
       <v-col>
-        <v-btn tile color="blue">
+        <v-btn tile color="blue" @click="filtrar()">
           <z class="textColorWhite">
           Filtrar
           </z></v-btn>
@@ -49,27 +49,58 @@
 
 <script>
 import { mdiMagnify } from '@mdi/js';
-
+import axios from 'axios';
 export default {
   name: "Filtros",
+  mounted(){
+    this.getCategorias();
+  },
   data() {
     return {
-      categorias: ["DAM", "DAW", "ASIX", "SMX"],
+      categorias: [],
       ordenar: ["Ascendente", "Descendente"],
       categoria: null,
       ordenarValue: null,
       ciudad: null,
       empresa: null,
+      categoriasArray:null,
+      buscador:null,
+      idCategoria:null,
+      idEmpresa:null,
       lupa:mdiMagnify
     };
   },
   methods: {
     formatear() {
+      this.buscador = null;
       this.categoria = null;
       this.ciudad = null;
       this.empresa = null;
       this.ordenarValue = null;
+      this.idCategoria =null;
+      this.idEmpresa = null
     },
+    async filtrar(){
+       for(let i=0;this.categoriasArray.length>i; i++){
+        if(this.categoriasArray[i].nom==this.categoria)
+          this.idCategoria=this.categoriasArray[i].id
+      }
+      let res = await axios.get("http://localhost:8080/empreses/"+this.empresa);
+
+      if(this.ordenarValue!=null && this.ordenarValue=="Ascendente")
+        this.ordenarValue="asc"
+      else if(this.ordenarValue!=null && this.ordenarValue=="Descendente")
+        this.ordenarValue="desc"
+
+      this.$emit("filtrar",this.buscador,this.idCategoria, this.ciudad, res.data.id, this.ordenarValue)
+    },
+    async getCategorias(){
+      let res = await axios.get("http://localhost:8080/categories/");
+      for(let i=0;res.data.length>i; i++){
+        this.categorias.push(res.data[i].nom)
+      }
+      this.categoriasArray=res.data
+    }
   },
 };
 </script>

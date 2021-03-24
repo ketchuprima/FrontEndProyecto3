@@ -4,7 +4,7 @@
       <v-card>
         <v-card-title class="headline grey lighten-2" primary-title>
           <div class="tituloContainer">
-            Cafetero
+            {{oferta.titol}}
             <v-spacer></v-spacer>
 
             <v-btn icon @click="clickCancelar()"
