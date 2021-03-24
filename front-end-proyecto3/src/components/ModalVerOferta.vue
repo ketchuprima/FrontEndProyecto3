@@ -4,7 +4,7 @@
       <v-card>
         <v-card-title class="headline grey lighten-2" primary-title>
           <div class="tituloContainer">
-            Cafetero
+            {{oferta.titol}}
             <v-spacer></v-spacer>
 
             <v-btn icon @click="clickCancelar()"
@@ -24,6 +24,10 @@
                   max-width="340"
                   src="https://picsum.photos/id/11/500/300"
                 ></v-img>
+                <div class="empresa">
+                  <v-icon style="margin-right: 10px">{{empresa}}</v-icon>
+                  {{oferta.empresa.nom}}
+                </div>
                 <div class="ubi">
                   <v-icon style="margin-right: 10px; margin-botton: 10px">{{
                     mapa
@@ -98,6 +102,7 @@ import { mdiMapMarker } from "@mdi/js";
 import { mdiClose } from "@mdi/js";
 import { mdiDirections } from "@mdi/js";
 import { mdiPencilBoxOutline } from '@mdi/js';
+import { mdiOfficeBuilding } from '@mdi/js';
 export default {
   props: ["check", "idOferta"],
   data() {
@@ -108,6 +113,7 @@ export default {
       close: mdiClose,
       mdiDirections: mdiDirections,
       draw: mdiPencilBoxOutline,
+      empresa: mdiOfficeBuilding,
     };
   },
   methods: {
