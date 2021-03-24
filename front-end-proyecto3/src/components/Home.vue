@@ -2,7 +2,8 @@
   <v-container>
     <v-row style="margin-top:3%;">
       <v-col cols="12" lg="4">
-        <Filtros></Filtros>
+        <Filtros
+        v-on:filtrar="filtrar"></Filtros>
       </v-col>
       <v-col cols="12" lg="8">
         <ListaOfertas
@@ -69,6 +70,19 @@ export default {
     };
   },
   methods: {
+    async filtrar(buscador,categoria,ciudad,empresa,ordenarValue){
+      //console.log("categoria"+categoria+" ubicacio"+ciudad+" titol"+buscador+" empresa"+empresa+" ordenarVlue"+ordenarValue)
+      let res = await axios.get("http://localhost:8080/ofertes/filtros",{
+        params:{
+          categoria: categoria,
+          ubicacio: ciudad,
+          titol: buscador,
+          empresa: empresa,
+          order: ordenarValue
+        }
+      });
+      this.listaOfertas=res.data;
+    },
     cerrarModal() {
       this.crearOferta = false;
     },
