@@ -12,10 +12,6 @@
                   <v-img
                     class="foto"
                     lazy-src="https://picsum.photos/id/11/10/6"
-                    min-height="100"
-                    max-height="100"
-                    min-width="120"
-                    max-width="120"
                     src="https://picsum.photos/id/11/500/300"
                   ></v-img>
                 </div>
