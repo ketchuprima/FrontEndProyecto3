@@ -9,10 +9,7 @@
     align-items: flex-start;
     justify-items: flex-start;
 }
-.v-dialog{
-    overflow-x: hidden!important;
-    overflow-y: hidden!important;
-}
+
 .flexcard{
     display: flex;
     align-items: flex-start;
