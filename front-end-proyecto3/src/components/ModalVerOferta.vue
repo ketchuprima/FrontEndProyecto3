@@ -14,7 +14,7 @@
         </v-card-title>
 
         <div class="flex">
-          <v-row>
+          <v-row style="margin: 0px">
             <v-col cols="4">
               <div>
                 <v-img
@@ -57,8 +57,10 @@
         <v-divider class="separacion"></v-divider>
 
         <v-card-actions>
-          <v-row>
-            <v-col cols="6"></v-col>
+          <v-row style="margin: -8px;">
+            <v-col cols="6">
+              <v-file-input dense placeholder="Cargar curriculum" v-model="curriculum"></v-file-input>
+            </v-col>
             <v-col cols="3">
               <v-btn
                 v-if="admin == true"
@@ -94,7 +96,7 @@
                 tile
                 @click="clickParticipar()"
               >
-                <p class="textColorWhite">Apuntarse</p>
+                <p class="textColorWhite">Inscribirse</p>
                 <v-spacer></v-spacer>
                 <v-icon>
                   {{ mdiDirections }}
@@ -124,6 +126,7 @@ export default {
       calendario: mdiCalendar,
       mapa: mdiMapMarker,
       close: mdiClose,
+      curriculum: null,
       mdiDirections: mdiDirections,
       draw: mdiPencilBoxOutline,
       empresa: mdiOfficeBuilding,
@@ -145,14 +148,15 @@ export default {
       this.oferta = res.data;
     },
     async clickParticipar() {
-      console.log("Bearer " + localStorage.getItem("accessToken"))
-       let res = await axios.post("http://localhost:8080/candidats/crearCandidatura/"+this.idOferta, {
+      /*console.log("Bearer " + localStorage.getItem("accessToken"))
+       let res = await axios.post("http://localhost:8080/candidats/crearCandidatura/"+this.idOferta, {}, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("accessToken"),
         },
       });
       console.log(res.data)
-      if (res.data.message == "ok") location.reload;
+      if (res.data.message == "ok") location.reload();*/
+      console.log(this.curriculum);
     },
   },
   mounted() {
