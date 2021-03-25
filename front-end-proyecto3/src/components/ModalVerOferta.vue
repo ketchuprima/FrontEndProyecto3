@@ -1,6 +1,6 @@
 <template>
   <div class="text-xs-center">
-    <v-dialog persistent v-model="check" width="800" style="margin: 10px">
+    <v-dialog persistent v-model="check" id="modalOferta" width="800">
       <v-card>
         <v-card-title class="headline grey lighten-2" primary-title>
           <div class="tituloContainer">
