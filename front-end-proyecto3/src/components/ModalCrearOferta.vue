@@ -84,11 +84,6 @@ export default {
     if(this.modo==2){
       this.getOfertaById();
       this.modo = 0;
-    }else if(this.modo != 0 && this.modo != 2){
-      this.titol = "";
-      this.descripcio = "";
-      this.ubicacio = "";
-      this.categoria = null;
     }
   },
   mounted(){
@@ -97,6 +92,10 @@ export default {
   },
   methods: {
     clickCancelar() {
+      this.titol = "";
+      this.descripcio = "";
+      this.ubicacio = "";
+      this.categoria = null;
       this.$emit("crearOferta", false);
     },
     clickCrear() {
