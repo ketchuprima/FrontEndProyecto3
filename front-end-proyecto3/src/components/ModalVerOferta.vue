@@ -148,16 +148,43 @@ export default {
       this.oferta = res.data;
     },
     async clickParticipar() {
-      /*console.log("Bearer " + localStorage.getItem("accessToken"))
+      console.log("Bearer " + localStorage.getItem("accessToken"))
        let res = await axios.post("http://localhost:8080/candidats/crearCandidatura/"+this.idOferta, {}, {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("accessToken"),
         },
       });
       console.log(res.data)
-      if (res.data.message == "ok") location.reload();*/
-      console.log(this.curriculum);
+      if (res.data.message == "ok") this.enviarCv();
+      
     },
+    async enviarCv(){
+      const file = this.curriculum;
+      const formData = new FormData();
+      formData.append("curriculum", file);
+      console.log(formData);
+      let res = await axios.post("http://localhost:8080/candidats/enviarCV/" + this.idOferta, formData, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        },
+      });
+      if(res.data.message == "ok") this.getIP(); 
+    },
+    async getIP(){
+      let res = await axios.get('https://api.ipify.org?format=json');
+
+      this.createRegistroCV(res.data.ip);
+    },
+    async createRegistroCV(ip){
+      let res = await axios.post("http://localhost:8080/registroCV/" + this.idOferta, {ip: ip}, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        },
+      });
+
+      if(res.data.message == null)
+        location.reload();
+    }
   },
   mounted() {
     this.getOfertaById();
