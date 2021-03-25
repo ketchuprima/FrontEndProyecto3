@@ -57,9 +57,13 @@
         <v-divider class="separacion"></v-divider>
 
         <v-card-actions>
-          <v-row style="margin: -8px;">
+          <v-row style="margin: -8px">
             <v-col cols="6">
-              <v-file-input dense placeholder="Cargar curriculum" v-model="curriculum"></v-file-input>
+              <v-file-input
+                dense
+                placeholder="Cargar curriculum"
+                v-model="curriculum"
+              ></v-file-input>
             </v-col>
             <v-col cols="3">
               <v-btn
@@ -102,6 +106,13 @@
                   {{ mdiDirections }}
                 </v-icon></v-btn
               >
+              <v-overlay :value="overlay" opacity="0.7">
+                <v-progress-circular
+                  indeterminate
+                  size="64"
+                ></v-progress-circular>
+                <h1>Procesando petición</h1>
+              </v-overlay>
             </v-col>
           </v-row>
         </v-card-actions>
@@ -131,6 +142,7 @@ export default {
       draw: mdiPencilBoxOutline,
       empresa: mdiOfficeBuilding,
       email: mdiAt,
+      overlay: false
     };
   },
   methods: {
@@ -148,43 +160,56 @@ export default {
       this.oferta = res.data;
     },
     async clickParticipar() {
-      console.log("Bearer " + localStorage.getItem("accessToken"))
-       let res = await axios.post("http://localhost:8080/candidats/crearCandidatura/"+this.idOferta, {}, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-        },
-      });
-      console.log(res.data)
+      this.overlay = true;
+      console.log("Bearer " + localStorage.getItem("accessToken"));
+      let res = await axios.post(
+        "http://localhost:8080/candidats/crearCandidatura/" + this.idOferta,
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+        }
+      );
+      console.log(res.data);
       if (res.data.message == "ok") this.enviarCv();
-      
     },
-    async enviarCv(){
+    async enviarCv() {
       const file = this.curriculum;
       const formData = new FormData();
       formData.append("curriculum", file);
       console.log(formData);
-      let res = await axios.post("http://localhost:8080/candidats/enviarCV/" + this.idOferta, formData, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-        },
-      });
-      if(res.data.message == "ok") this.getIP(); 
+      let res = await axios.post(
+        "http://localhost:8080/candidats/enviarCV/" + this.idOferta,
+        formData,
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+        }
+      );
+      if (res.data.message == "ok") this.getIP();
     },
-    async getIP(){
-      let res = await axios.get('https://api.ipify.org?format=json');
+    async getIP() {
+      let res = await axios.get("https://api.ipify.org?format=json");
 
       this.createRegistroCV(res.data.ip);
     },
-    async createRegistroCV(ip){
-      let res = await axios.post("http://localhost:8080/registroCV/" + this.idOferta, {ip: ip}, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("accessToken"),
-        },
-      });
+    async createRegistroCV(ip) {
+      let res = await axios.post(
+        "http://localhost:8080/registroCV/" + this.idOferta,
+        { ip: ip },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+          },
+        }
+      );
 
-      if(res.data.message == null)
+      if (res.data.message == null){
         location.reload();
-    }
+      }
+    },
   },
   mounted() {
     this.getOfertaById();
