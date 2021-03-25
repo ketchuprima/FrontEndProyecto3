@@ -1,102 +1,91 @@
 <template>
-  <div class="flexible">
-    <v-row
-      ><v-col cols="12" v-for="oferta in ofertas" :key="oferta.id">
-        <!--v-bind:class="{nuevo: oferta.antiguedad<15,
+  <v-row class="flexible"
+    ><v-col cols="12" v-for="oferta in ofertas" :key="oferta.id">
+      <!--v-bind:class="{nuevo: oferta.antiguedad<15,
             antiguo: oferta.antiguedad>15}" -->
-        <v-card class="mx-auto tarjeta" outlined>
-          <v-list-item three-line>
-            <v-list-item-content>
-              <div>
-                <v-row>
-                  <v-col cols="2">
-                    <div @click="abrirOferta(oferta)">
-                      <v-img
-                        class="foto"
-                        lazy-src="https://picsum.photos/id/11/10/6"
-                        min-height="150"
-                        max-height="150"
-                        min-width="150"
-                        max-width="150"
-                        src="https://picsum.photos/id/11/500/300"
-                      ></v-img>
-                    </div>
-                  </v-col>
-                  <v-col cols="10">
-                    <div style="display: flex; height: 100%">
-                      <div class="texto" @click="abrirOferta(oferta)">
-                        <v-list-item-title class="titulo">{{
-                          oferta.titol
-                        }}</v-list-item-title>
+      <v-card class="mx-auto tarjeta" outlined @click="abrirOferta(oferta)">
+        <v-list-item three-line>
+          <v-list-item-content>
+            <v-row>
+              <v-col cols="2">
+                <div>
+                  <v-img
+                    class="foto"
+                    lazy-src="https://picsum.photos/id/11/10/6"
+                    min-height="100"
+                    max-height="100"
+                    min-width="120"
+                    max-width="120"
+                    src="https://picsum.photos/id/11/500/300"
+                  ></v-img>
+                </div>
+                <div class="btnContainer">
+                  <v-icon v-if="oferta.antiguedad < 15">{{ newIcon }}</v-icon>
+                  <div v-if="oferta.participado == true">
+                    <v-btn x-small disabled depressed> Inscrito </v-btn>
+                  </div>
+                  <v-spacer></v-spacer>
+                  <v-btn
+                    color="blue"
+                    v-if="adminPanel == false && admin == true"
+                    @click="clickCandidaturas(oferta)"
+                    tile
+                    medium
+                    depressed
+                  >
+                    <z class="textColorWhite">Candidaturas</z></v-btn
+                  >
+                  <div>
+                    <v-btn
+                      color="primary"
+                      style="margin-right: 2%"
+                      v-if="adminPanel == true"
+                      @click="aceptar(oferta.id)"
+                      dark
+                      tile
+                      >Aceptar
+                      <v-icon dark right> mdi-checkbox-marked-circle </v-icon>
+                    </v-btn>
+                    <v-divider vertical></v-divider>
+                    <v-btn
+                      color="red"
+                      v-if="adminPanel == true"
+                      @click="rechazar(oferta.id)"
+                      dark
+                      tile
+                      >Rechazar
+                      <v-icon dark right>mdi-cancel</v-icon>
+                    </v-btn>
+                  </div>
+                </div>
+              </v-col>
+              <v-col cols="10" class="margen">
+                <v-card-text class="texto" style="height: 100%">
+                  <v-list-item class="titulo">{{
+                    oferta.titol
+                  }}</v-list-item>
 
-                        <v-list-item class="ubicacio">
-                          <div style="display: flex; flex-direction: column">
-                            <p>{{ oferta.empresa.nom }}</p>
-                            <p>
-                              {{ oferta.ubicacio }} |
-                              {{ oferta.data_de_publicacio.split(" ")[0] }}
-                            </p>
-                            <div v-if="admin == true">
-                              {{ oferta.empresa.correu }}
-                            </div>
-                          </div></v-list-item
-                        >
-                        <v-list-item class="descripcion">{{
-                          oferta.descripcio
-                        }}</v-list-item>
+                  <v-list-item class="ubicacio">
+                    <div>
+                      <p>
+                        {{ oferta.empresa.nom }}, {{ oferta.ubicacio }} |
+                        {{ oferta.data_de_publicacio.split(" ")[0] }}
+                      </p>
+                      <div v-if="admin == true">
+                        {{ oferta.empresa.correu }}
                       </div>
-                      <div class="btnContainer">
-                        <v-icon v-if="oferta.antiguedad < 15">{{
-                          newIcon
-                        }}</v-icon>
-                        <div v-if="oferta.participado == true">
-                          <v-btn x-small disabled depressed> Inscrito </v-btn>
-                        </div>
-                        <v-spacer></v-spacer>
-                        <v-btn
-                          color="blue"
-                          v-if="adminPanel == false && admin == true"
-                          @click="clickCandidaturas(oferta)"
-                          tile
-                          medium
-                          depressed
-                        >
-                          <z class="textColorWhite">Candidaturas</z></v-btn
-                        >
-                        <div style="display: flex">
-                          <v-btn
-                            color="primary"
-                            style="margin-right: 2%"
-                            v-if="adminPanel == true"
-                            @click="aceptar(oferta.id)"
-                            dark
-                            tile
-                            >Aceptar
-                            <v-icon dark right>
-                              mdi-checkbox-marked-circle
-                            </v-icon>
-                          </v-btn>
-                          <v-divider vertical></v-divider>
-                          <v-btn
-                            color="red"
-                            v-if="adminPanel == true"
-                            @click="rechazar(oferta.id)"
-                            dark
-                            tile
-                            >Rechazar
-                            <v-icon dark right>mdi-cancel</v-icon>
-                          </v-btn>
-                        </div>
-                      </div>
-                    </div>
-                  </v-col>
-                </v-row>
-              </div>
-            </v-list-item-content>
-          </v-list-item>
-        </v-card>
-      </v-col>
-    </v-row>
+                    </div></v-list-item
+                  >
+                  <v-list-item class="descripcion">{{
+                    oferta.descripcio
+                  }}</v-list-item>
+                </v-card-text>
+              </v-col>
+            </v-row>
+          </v-list-item-content>
+        </v-list-item>
+      </v-card>
+    </v-col>
     <ModalVerOferta
       v-if="modalOferta"
       :check="modalOferta"
@@ -113,7 +102,7 @@
       v-on:cerrarCandidatos="cerrarCandidatos"
     >
     </ModalCandidatos>
-  </div>
+  </v-row>
 </template>
 <script>
 import ModalCandidatos from "./ModalCandidatos.vue";

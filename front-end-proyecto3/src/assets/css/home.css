@@ -1,7 +1,12 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+
 /*ListaOfertas:*/
 
 .tarjeta{
-    max-width: 90%;
+    max-width: 85%;
 }
 
 .flexible{
@@ -10,18 +15,15 @@
     justify-items: flex-start;
 }
 
-.flexcard{
-    display: flex;
-    align-items: flex-start;
-    margin: 0.5%;
-}
-
 .titulo{
-    align-items: flex-start;
-    font-size: 200%;
-    margin-left: 2%;
+    margin-top: -2%;
+    font-size: 150%;
 }
 
+.margen{
+    margin: 0;
+    padding: 0;
+}
 .ubicacio{
     font-size: 80%;
     margin-top: -1%;
@@ -49,8 +51,12 @@ p{
 }
 
 .texto{
-    width: 70%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
     text-align: left;
+    width: 100%;
 }
 
 .foto{
@@ -61,12 +67,9 @@ p{
 
 /*ModalOferta:*/
 .btnContainer{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
     width: 100%;
-    margin-right: 3%;
 }
+
 .tituloContainer{
     display:flex;
     width:100% ;
