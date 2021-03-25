@@ -1,13 +1,14 @@
 <template>
   <div class="flexible">
     <v-row
-      ><v-col cols="12" v-for="oferta in ofertas" :key="oferta.id" >
-        <v-card class="mx-auto tarjeta" outlined v-bind:class="{nuevo: oferta.antiguedad<='15',
-            antiguo: oferta.antiguedad>'15'}">
+      ><v-col cols="12" v-for="oferta in ofertas" :key="oferta.id">
+        <!--v-bind:class="{nuevo: oferta.antiguedad<15,
+            antiguo: oferta.antiguedad>15}" -->
+        <v-card class="mx-auto tarjeta" outlined>
           <v-list-item three-line>
             <v-list-item-content>
-              <div >
-                <v-row  >
+              <div>
+                <v-row>
                   <v-col cols="2">
                     <div @click="abrirOferta(oferta)">
                       <v-img
@@ -28,15 +29,16 @@
                           oferta.titol
                         }}</v-list-item-title>
 
-                        <v-list-item class="ubicacio"
-                          >
-                          <div style="display:flex; flex-direction:column;">
-                          <p>{{oferta.empresa.nom}}</p>
-                          <p>
-                            {{ oferta.ubicacio }} |
-                            {{ oferta.data_de_publicacio.split(" ")[0] }}
-                          </p>
-                          
+                        <v-list-item class="ubicacio">
+                          <div style="display: flex; flex-direction: column">
+                            <p>{{ oferta.empresa.nom }}</p>
+                            <p>
+                              {{ oferta.ubicacio }} |
+                              {{ oferta.data_de_publicacio.split(" ")[0] }}
+                            </p>
+                            <div v-if="admin == true">
+                              {{ oferta.empresa.correu }}
+                            </div>
                           </div></v-list-item
                         >
                         <v-list-item class="descripcion">{{
@@ -44,6 +46,12 @@
                         }}</v-list-item>
                       </div>
                       <div class="btnContainer">
+                        <v-icon v-if="oferta.antiguedad < 15">{{
+                          newIcon
+                        }}</v-icon>
+                        <div v-if="oferta.participado == true">
+                          <v-btn x-small disabled depressed> Inscrito </v-btn>
+                        </div>
                         <v-spacer></v-spacer>
                         <v-btn
                           color="blue"
@@ -52,7 +60,8 @@
                           tile
                           medium
                           depressed
-                          > <z class="textColorWhite">Candidaturas</z></v-btn
+                        >
+                          <z class="textColorWhite">Candidaturas</z></v-btn
                         >
                         <div style="display: flex">
                           <v-btn
@@ -92,6 +101,8 @@
       v-if="modalOferta"
       :check="modalOferta"
       :idOferta="idOferta"
+      :admin="admin"
+      :inscrito="inscrito"
       v-on:cerrarOferta="cerrarOferta"
       v-on:modificarOferta="modificarOferta"
     ></ModalVerOferta>
@@ -107,6 +118,7 @@
 <script>
 import ModalCandidatos from "./ModalCandidatos.vue";
 import ModalVerOferta from "./ModalVerOferta.vue";
+import { mdiNewBox } from "@mdi/js";
 import axios from "axios";
 export default {
   name: "listaOfertas",
@@ -122,26 +134,28 @@ export default {
       idOferta: null,
       adminPanel: false,
       admin: false,
+      inscrito: false,
+      newIcon: mdiNewBox,
     };
-  },
-  mounted() {
-    var date = new Date()
-    var date2 = new Date()
-    for(let i =0; i<this.ofertas.length;i++){
-      date2 = new Date(this.ofertas[i].data_de_publicacio)
-      this.ofertas[i].antiguedad=date.getDate()-date2.getDate()
-    }
-    console.log("ofertas")
-    console.log(this.ofertas)
-    this.checkUser();
   },
   updated() {
     if (this.$route.name == "adminPanel") this.adminPanel = true;
+
+    var date = new Date();
+    var date2 = new Date();
+    for (let i = 0; i < this.ofertas.length; i++) {
+      date2 = new Date(this.ofertas[i].data_de_publicacio);
+      this.ofertas[i].antiguedad = date.getDate() - date2.getDate();
+    }
+    this.checkUser();
   },
   methods: {
     abrirOferta(oferta) {
       this.modalOferta = true;
       this.idOferta = oferta.id;
+      this.inscrito = !oferta.participado;
+      console.log(oferta);
+      console.log(this.inscrito);
     },
     cerrarOferta() {
       this.modalOferta = false;
@@ -180,9 +194,21 @@ export default {
         },
       });
       for (let i = 0; i < res.data.roles.length; i++) {
-        if (res.data.roles[i].nombre == "ROLE_ADMIN") this.admin = true;
+        if (res.data.roles[i].nombre == "ROLE_ADMIN") {
+          this.admin = true;
+        }
+      }
+      for (let i = 0; i < this.ofertas.length; i++) {
+        for (let j = 0; j < this.ofertas[i].candidats.length; i++) {
+          if (this.ofertas[i].candidats[j].id == res.data.id)
+            this.ofertas[i].participado = true;
+          else this.ofertas[i].participado = false;
+        }
       }
     },
   },
 };
 </script>
+<style>
+@import "../assets/css/home.css";
+</style>

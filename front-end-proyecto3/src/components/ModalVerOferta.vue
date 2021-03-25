@@ -1,10 +1,10 @@
 <template>
   <div class="text-xs-center">
-    <v-dialog persistent v-model="check" width="800">
+    <v-dialog persistent v-model="check" width="800" style="margin: 10px">
       <v-card>
         <v-card-title class="headline grey lighten-2" primary-title>
           <div class="tituloContainer">
-            {{oferta.titol}}
+            {{ oferta.titol }}
             <v-spacer></v-spacer>
 
             <v-btn icon @click="clickCancelar()"
@@ -25,8 +25,12 @@
                   src="https://picsum.photos/id/11/500/300"
                 ></v-img>
                 <div class="empresa">
-                  <v-icon style="margin-right: 10px">{{empresa}}</v-icon>
-                  {{oferta.empresa.nom}}
+                  <v-icon style="margin-right: 10px">{{ empresa }}</v-icon>
+                  {{ oferta.empresa.nom }}
+                </div>
+                <div class="empresa" v-if="admin == true">
+                  <v-icon style="margin-right: 10px">{{ email }}</v-icon>
+                  {{ oferta.empresa.correu }}
                 </div>
                 <div class="ubi">
                   <v-icon style="margin-right: 10px; margin-botton: 10px">{{
@@ -57,15 +61,14 @@
             <v-col cols="6"></v-col>
             <v-col cols="3">
               <v-btn
+                v-if="admin == true"
                 block
                 class="white--text boton"
                 color="warning"
                 tile
                 @click="clickModificar()"
-                >
-                <p class="textColorWhite">
-                Modificar
-                </p>
+              >
+                <p class="textColorWhite">Modificar</p>
                 <v-spacer></v-spacer>
                 <v-icon>
                   {{ draw }}
@@ -74,15 +77,24 @@
             </v-col>
             <v-col cols="3">
               <v-btn
+                v-if="inscrito == false"
                 block
                 class="white--text boton"
                 color="blue"
                 tile
-                @click="clickCrear()"
-                >
-                <p class="textColorWhite">
-                  Apuntarse
-                </p>
+                disabled
+              >
+                <p class="textColorWhite">Inscrito</p></v-btn
+              >
+              <v-btn
+                v-else
+                block
+                class="white--text boton"
+                color="blue"
+                tile
+                @click="clickParticipar()"
+              >
+                <p class="textColorWhite">Apuntarse</p>
                 <v-spacer></v-spacer>
                 <v-icon>
                   {{ mdiDirections }}
@@ -101,10 +113,11 @@ import { mdiCalendar } from "@mdi/js";
 import { mdiMapMarker } from "@mdi/js";
 import { mdiClose } from "@mdi/js";
 import { mdiDirections } from "@mdi/js";
-import { mdiPencilBoxOutline } from '@mdi/js';
-import { mdiOfficeBuilding } from '@mdi/js';
+import { mdiPencilBoxOutline } from "@mdi/js";
+import { mdiAt } from "@mdi/js";
+import { mdiOfficeBuilding } from "@mdi/js";
 export default {
-  props: ["check", "idOferta"],
+  props: ["check", "idOferta", "admin", "inscrito"],
   data() {
     return {
       oferta: null,
@@ -114,6 +127,7 @@ export default {
       mdiDirections: mdiDirections,
       draw: mdiPencilBoxOutline,
       empresa: mdiOfficeBuilding,
+      email: mdiAt,
     };
   },
   methods: {
@@ -129,6 +143,16 @@ export default {
       );
 
       this.oferta = res.data;
+    },
+    async clickParticipar() {
+      console.log("Bearer " + localStorage.getItem("accessToken"))
+       let res = await axios.post("http://localhost:8080/candidats/crearCandidatura/"+this.idOferta, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        },
+      });
+      console.log(res.data)
+      if (res.data.message == "ok") location.reload;
     },
   },
   mounted() {

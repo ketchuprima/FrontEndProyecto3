@@ -27,12 +27,13 @@
     margin-top: -1%;
 }
 .nuevo{
-    background-color: aqua;
+    background-color: rgb(181, 250, 184)!important;
 }
+/*
 .antiguo{
-    background-color:brown;
+    background-color:brown!important;
 }
-
+*/
 p{
     color: mediumblue;
     margin-bottom:5px!important;
