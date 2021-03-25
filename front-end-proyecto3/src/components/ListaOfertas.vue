@@ -3,63 +3,24 @@
     ><v-col cols="12" v-for="oferta in ofertas" :key="oferta.id">
       <!--v-bind:class="{nuevo: oferta.antiguedad<15,
             antiguo: oferta.antiguedad>15}" -->
-      <v-card class="mx-auto tarjeta" outlined @click="abrirOferta(oferta)">
+      <v-card class="mx-auto tarjeta" outlined>
         <v-list-item three-line>
           <v-list-item-content>
-            <v-row>
+            <v-row @click="abrirOferta(oferta)">
               <v-col cols="2">
                 <div>
                   <v-img
                     class="foto"
                     lazy-src="https://picsum.photos/id/11/10/6"
+                    width="150%"
                     src="https://picsum.photos/id/11/500/300"
                   ></v-img>
                 </div>
-                <div class="btnContainer">
-                  <v-icon v-if="oferta.antiguedad < 15">{{ newIcon }}</v-icon>
-                  <div v-if="oferta.participado == true">
-                    <v-btn x-small disabled depressed> Inscrito </v-btn>
-                  </div>
-                  <v-spacer></v-spacer>
-                  <v-btn
-                    color="blue"
-                    v-if="adminPanel == false && admin == true"
-                    @click="clickCandidaturas(oferta)"
-                    tile
-                    medium
-                    depressed
-                  >
-                    <z class="textColorWhite">Candidaturas</z></v-btn
-                  >
-                  <div>
-                    <v-btn
-                      color="primary"
-                      style="margin-right: 2%"
-                      v-if="adminPanel == true"
-                      @click="aceptar(oferta.id)"
-                      dark
-                      tile
-                      >Aceptar
-                      <v-icon dark right> mdi-checkbox-marked-circle </v-icon>
-                    </v-btn>
-                    <v-divider vertical></v-divider>
-                    <v-btn
-                      color="red"
-                      v-if="adminPanel == true"
-                      @click="rechazar(oferta.id)"
-                      dark
-                      tile
-                      >Rechazar
-                      <v-icon dark right>mdi-cancel</v-icon>
-                    </v-btn>
-                  </div>
-                </div>
+                <div></div>
               </v-col>
               <v-col cols="10" class="margen">
                 <v-card-text class="texto" style="height: 100%">
-                  <v-list-item class="titulo">{{
-                    oferta.titol
-                  }}</v-list-item>
+                  <v-list-item class="titulo">{{ oferta.titol }}</v-list-item>
 
                   <v-list-item class="ubicacio">
                     <div>
@@ -76,6 +37,48 @@
                     oferta.descripcio
                   }}</v-list-item>
                 </v-card-text>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="3" style="display: flex; align-items: flex-start;">
+                <v-icon v-if="oferta.antiguedad < 15">{{ newIcon }}</v-icon>
+                <div v-if="oferta.participado == true">
+                  <v-btn x-small disabled depressed> Inscrito </v-btn>
+                </div>
+              </v-col>
+              <v-col cols="9" style="display: flex; align-items: flex-end; justify-content: flex-end;">
+                <v-btn
+                  color="blue"
+                  v-if="adminPanel == false && admin == true"
+                  @click="clickCandidaturas(oferta)"
+                  tile
+                  medium
+                  depressed
+                >
+                  <z class="textColorWhite">Candidaturas</z></v-btn
+                >
+                <div>
+                  <v-btn
+                    color="primary"
+                    style="margin-right: 2%"
+                    v-if="adminPanel == true"
+                    @click="aceptar(oferta.id)"
+                    dark
+                    tile
+                    >Aceptar
+                    <v-icon dark right> mdi-checkbox-marked-circle </v-icon>
+                  </v-btn>
+                  <v-divider vertical></v-divider>
+                  <v-btn
+                    color="red"
+                    v-if="adminPanel == true"
+                    @click="rechazar(oferta.id)"
+                    dark
+                    tile
+                    >Rechazar
+                    <v-icon dark right>mdi-cancel</v-icon>
+                  </v-btn>
+                </div>
               </v-col>
             </v-row>
           </v-list-item-content>
