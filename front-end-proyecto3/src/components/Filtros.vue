@@ -79,6 +79,7 @@ export default {
       this.ordenarValue = null;
       this.idCategoria =null;
       this.idEmpresa = null
+      this.$emit("formatear");
     },
     async filtrar(){
        for(let i=0;this.categoriasArray.length>i; i++){

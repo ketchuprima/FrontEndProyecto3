@@ -3,7 +3,7 @@
     <v-row style="margin-top:3%;">
       <v-col cols="12" lg="4">
         <Filtros
-        v-on:filtrar="filtrar"></Filtros>
+        v-on:filtrar="filtrar" v-on:formatear="getOfertas"></Filtros>
       </v-col>
       <v-col cols="12" lg="8">
         <ListaOfertas

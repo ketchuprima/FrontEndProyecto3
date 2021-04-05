@@ -8,14 +8,14 @@
     <v-row>
       <v-col class="column" sm="12" md="6" style="padding-right: 0px">
         <div class="containerGrafico">
-          <h2 class="titleContainer textColorWhite">Grafico de las ofertas</h2>
+          <h2 class="titleContainer textColorWhite">Gráfico de ofertas por categoría</h2>
           <Grafico
           :value="value"></Grafico>
         </div>
       </v-col>
       <v-col class="column" sm="12" md="6" style="padding-left: 0px">
         <div class="containerGrafico">
-          <h2 class="titleContainer textColorWhite">Numero de las ofertas</h2>
+          <h2 class="titleContainer textColorWhite">Número de ofertas por categoría</h2>
           <Tabla
           :categorias="categorias"></Tabla>
           <ModalEmpresa
