@@ -5,14 +5,17 @@
             antiguo: oferta.antiguedad>15}" -->
       <v-card class="mx-auto tarjeta" outlined>
         <v-list-item three-line>
-          <v-list-item-content>
-            <v-row @click="abrirOferta(oferta)">
+          <v-list-item-content @click="abrirOferta(oferta)">
+            <v-row>
               <v-col cols="2">
                 <div>
                   <v-img
                     class="foto"
+                    min-width="100%"
+                    min-height="100%"
                     lazy-src="https://picsum.photos/id/11/10/6"
-                    width="150%"
+                    max-width="100%"
+                    max-height="100%"
                     src="https://picsum.photos/id/11/500/300"
                   ></v-img>
                 </div>
@@ -20,8 +23,7 @@
               </v-col>
               <v-col cols="10" class="margen">
                 <v-card-text class="texto" style="height: 100%">
-                  <v-list-item class="titulo">{{ oferta.titol }}</v-list-item>
-
+                  <v-list-item class="titulo">{{ oferta.titol }} <v-icon class="icon" v-if="oferta.antiguedad < 15">{{ newIcon }}</v-icon></v-list-item>
                   <v-list-item class="ubicacio">
                     <div>
                       <p>
@@ -34,15 +36,14 @@
                     </div></v-list-item
                   >
                   <v-list-item class="descripcion">{{
-                    oferta.descripcio
+                     oferta.descripcio
                   }}</v-list-item>
                 </v-card-text>
               </v-col>
             </v-row>
             <v-row>
               <v-col cols="3" style="display: flex; align-items: flex-start">
-                <v-icon v-if="oferta.antiguedad < 15">{{ newIcon }}</v-icon>
-                  <v-btn v-if="oferta.participado" x-small disabled depressed> Inscrito </v-btn>
+                <v-btn v-if="oferta.participado" x-small disabled depressed> Inscrito </v-btn>
               </v-col>
               <v-col
                 cols="9"
@@ -62,10 +63,10 @@
                 >
                   <z class="textColorWhite">Candidaturas</z></v-btn
                 >
-                <div>
+                <div class="botones">
                   <v-btn
                     color="primary"
-                    style="margin-right: 2%"
+                    class="aceptar"
                     v-if="adminPanel == true"
                     @click="aceptar(oferta.id)"
                     dark
@@ -76,6 +77,7 @@
                   <v-divider vertical></v-divider>
                   <v-btn
                     color="red"
+                    class="rechazar"
                     v-if="adminPanel == true"
                     @click="rechazar(oferta.id)"
                     dark

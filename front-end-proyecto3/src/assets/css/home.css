@@ -31,6 +31,14 @@ body{
 .nuevo{
     background-color: rgb(181, 250, 184)!important;
 }
+
+.botones{
+    display: flex;
+}
+
+.aceptar{
+    margin-right: 1%;
+}
 /*
 .antiguo{
     background-color:brown!important;
