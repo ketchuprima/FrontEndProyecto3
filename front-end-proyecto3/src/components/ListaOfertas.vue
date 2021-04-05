@@ -1,5 +1,5 @@
 <template>
-  <v-row class="flexible"
+  <v-row class="flexible" v-if="ofertas.length != 0"
     ><v-col cols="12" v-for="oferta in ofertas" :key="oferta.id">
       <!--v-bind:class="{nuevo: oferta.antiguedad<15,
             antiguo: oferta.antiguedad>15}" -->
@@ -102,6 +102,7 @@
     >
     </ModalCandidatos>
   </v-row>
+  <span v-else>No hay ofertas con estos filtros</span>
 </template>
 <script>
 import ModalCandidatos from "./ModalCandidatos.vue";
