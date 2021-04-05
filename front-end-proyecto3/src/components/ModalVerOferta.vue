@@ -1,6 +1,8 @@
 <template>
   <div class="text-xs-center">
     <v-dialog persistent v-model="check" id="modalOferta" width="800">
+      <AlertError v-if="showError == true" :message="error"></AlertError>
+
       <v-card>
         <v-card-title class="headline grey lighten-2" primary-title>
           <div class="tituloContainer">
@@ -61,6 +63,7 @@
             <v-col cols="6">
               <v-file-input
                 dense
+                v-show="inscrito != false"
                 placeholder="Cargar curriculum"
                 v-model="curriculum"
               ></v-file-input>
@@ -98,7 +101,7 @@
                 class="white--text boton"
                 color="blue"
                 tile
-                @click="clickParticipar()"
+                @click="enviarCurriculum()"
               >
                 <p class="textColorWhite">Inscribirse</p>
                 <v-spacer></v-spacer>
@@ -121,6 +124,7 @@
   </div>
 </template>
 <script>
+import AlertError from "./AlertError.vue";
 import axios from "axios";
 import { mdiCalendar } from "@mdi/js";
 import { mdiMapMarker } from "@mdi/js";
@@ -131,6 +135,9 @@ import { mdiAt } from "@mdi/js";
 import { mdiOfficeBuilding } from "@mdi/js";
 export default {
   props: ["check", "idOferta", "admin", "inscrito"],
+  components: {
+    AlertError,
+  },
   data() {
     return {
       oferta: null,
@@ -142,7 +149,9 @@ export default {
       draw: mdiPencilBoxOutline,
       empresa: mdiOfficeBuilding,
       email: mdiAt,
-      overlay: false
+      overlay: false,
+      error: "error",
+      showError: false,
     };
   },
   methods: {
@@ -159,8 +168,7 @@ export default {
 
       this.oferta = res.data;
     },
-    async clickParticipar() {
-      this.overlay = true;
+    async crearCandidatura() {
       console.log("Bearer " + localStorage.getItem("accessToken"));
       let res = await axios.post(
         "http://localhost:8080/candidats/crearCandidatura/" + this.idOferta,
@@ -172,23 +180,33 @@ export default {
         }
       );
       console.log(res.data);
-      if (res.data.message == "ok") this.enviarCv();
+      if (res.data.message == "ok") location.reload();
     },
-    async enviarCv() {
-      const file = this.curriculum;
-      const formData = new FormData();
-      formData.append("curriculum", file);
-      console.log(formData);
-      let res = await axios.post(
-        "http://localhost:8080/candidats/enviarCV/" + this.idOferta,
-        formData,
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("accessToken"),
-          },
+    async enviarCurriculum() {
+      if (this.curriculum != null) {
+        this.overlay = true;
+        const file = this.curriculum;
+        const formData = new FormData();
+        formData.append("curriculum", file);
+        console.log(formData);
+        let res = await axios.post(
+          "http://localhost:8080/candidats/enviarCV/" + this.idOferta,
+          formData,
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("accessToken"),
+            },
+          }
+        );
+        if (res.data.message == "ok") this.getIP();
+        else{
+          this.error=res.data.message
+          this.showError = true;
         }
-      );
-      if (res.data.message == "ok") this.getIP();
+      } else {
+        this.error = "El envio del curriculum es obligatorio";
+        this.showError = true;
+      }
     },
     async getIP() {
       let res = await axios.get("https://api.ipify.org?format=json");
@@ -206,8 +224,10 @@ export default {
         }
       );
 
-      if (res.data.message == null){
-        location.reload();
+      if (res.data.message == null) {
+              console.log("esta en null")
+
+        this.crearCandidatura();
       }
     },
   },
