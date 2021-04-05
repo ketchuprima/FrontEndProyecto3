@@ -40,13 +40,18 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="3" style="display: flex; align-items: flex-start;">
+              <v-col cols="3" style="display: flex; align-items: flex-start">
                 <v-icon v-if="oferta.antiguedad < 15">{{ newIcon }}</v-icon>
-                <div v-if="oferta.participado == true">
-                  <v-btn x-small disabled depressed> Inscrito </v-btn>
-                </div>
+                  <v-btn v-if="oferta.participado" x-small disabled depressed> Inscrito </v-btn>
               </v-col>
-              <v-col cols="9" style="display: flex; align-items: flex-end; justify-content: flex-end;">
+              <v-col
+                cols="9"
+                style="
+                  display: flex;
+                  align-items: flex-end;
+                  justify-content: flex-end;
+                "
+              >
                 <v-btn
                   color="blue"
                   v-if="adminPanel == false && admin == true"
@@ -83,6 +88,7 @@
             </v-row>
           </v-list-item-content>
         </v-list-item>
+        <h1 v-show="false">{{prueba}}</h1>
       </v-card>
     </v-col>
     <ModalVerOferta
@@ -125,21 +131,14 @@ export default {
       admin: false,
       inscrito: false,
       newIcon: mdiNewBox,
+      prueba: null
     };
   },
   updated() {
     console.log("actualizado bro");
     this.checkUser();
-
+    this.getAntiguedad();
     if (this.$route.name == "adminPanel") this.adminPanel = true;
-
-    var date = new Date();
-    var date2 = new Date();
-    for (let i = 0; i < this.ofertas.length; i++) {
-      date2 = new Date(this.ofertas[i].data_de_publicacio);
-      this.ofertas[i].antiguedad = date.getDate() - date2.getDate();
-    }
-    
   },
   methods: {
     abrirOferta(oferta) {
@@ -179,6 +178,14 @@ export default {
       this.modalOferta = false;
       this.$emit("modificarOferta", idOferta);
     },
+    getAntiguedad() {
+      var date = new Date();
+      var date2 = new Date();
+      for (let i = 0; i < this.ofertas.length; i++) {
+        date2 = new Date(this.ofertas[i].data_de_publicacio);
+        this.ofertas[i].antiguedad = date.getDate() - date2.getDate();
+      }
+    },
     async checkUser() {
       let res = await axios.get("http://localhost:8080/users/getUser", {
         headers: {
@@ -193,7 +200,7 @@ export default {
 
       this.getCandidato(res.data.id);
     },
-    async getCandidato(idUser){
+    async getCandidato(idUser) {
       let res = await axios.get("http://localhost:8080/candidats/" + idUser);
 
       for (let i = 0; i < this.ofertas.length; i++) {
@@ -203,9 +210,8 @@ export default {
           else this.ofertas[i].participado = false;
         }
       }
-
-      console.log(this.ofertas[0].participado);
-    }
+      this.prueba="xds";
+    },
   },
 };
 </script>

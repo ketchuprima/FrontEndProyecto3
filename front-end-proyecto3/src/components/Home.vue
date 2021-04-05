@@ -71,8 +71,8 @@ export default {
   },
   methods: {
     async filtrar(buscador,categoria,ciudad,empresa,ordenarValue){
-      console.log(empresa);
-      //console.log("categoria"+categoria+" ubicacio"+ciudad+" titol"+buscador+" empresa"+empresa+" ordenarVlue"+ordenarValue)
+      console.log(buscador+categoria+ciudad+empresa+ordenarValue);
+      if(empresa==0)empresa=null
       let res = await axios.get("http://localhost:8080/ofertes/filtros",{
         params:{
           categoria: categoria,
