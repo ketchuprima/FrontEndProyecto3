@@ -128,6 +128,9 @@ export default {
     };
   },
   updated() {
+    console.log("actualizado bro");
+    this.checkUser();
+
     if (this.$route.name == "adminPanel") this.adminPanel = true;
 
     var date = new Date();
@@ -136,7 +139,7 @@ export default {
       date2 = new Date(this.ofertas[i].data_de_publicacio);
       this.ofertas[i].antiguedad = date.getDate() - date2.getDate();
     }
-    this.checkUser();
+    
   },
   methods: {
     abrirOferta(oferta) {
@@ -187,14 +190,22 @@ export default {
           this.admin = true;
         }
       }
+
+      this.getCandidato(res.data.id);
+    },
+    async getCandidato(idUser){
+      let res = await axios.get("http://localhost:8080/candidats/" + idUser);
+
       for (let i = 0; i < this.ofertas.length; i++) {
-        for (let j = 0; j < this.ofertas[i].candidats.length; i++) {
+        for (let j = 0; j < this.ofertas[i].candidats.length; j++) {
           if (this.ofertas[i].candidats[j].id == res.data.id)
             this.ofertas[i].participado = true;
           else this.ofertas[i].participado = false;
         }
       }
-    },
+
+      console.log(this.ofertas[0].participado);
+    }
   },
 };
 </script>
