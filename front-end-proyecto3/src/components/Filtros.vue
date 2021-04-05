@@ -78,7 +78,7 @@ export default {
       this.empresa = null;
       this.ordenarValue = null;
       this.idCategoria =null;
-      this.idEmpresa = null
+      this.idEmpresa = null;
       this.$emit("formatear");
     },
     async filtrar(){
@@ -87,13 +87,16 @@ export default {
           this.idCategoria=this.categoriasArray[i].id
       }
       let res = await axios.get("http://localhost:8080/empreses/"+this.empresa);
-
+        
       if(this.ordenarValue!=null && this.ordenarValue=="Ascendente")
         this.ordenarValue="asc"
       else if(this.ordenarValue!=null && this.ordenarValue=="Descendente")
         this.ordenarValue="desc"
 
-      this.$emit("filtrar",this.buscador,this.idCategoria, this.ciudad, res.data.id, this.ordenarValue)
+      if(res.data.message != null)
+        this.$emit("filtrar",this.buscador,this.idCategoria, this.ciudad, 0, this.ordenarValue)
+      else
+        this.$emit("filtrar",this.buscador,this.idCategoria, this.ciudad, res.data.id, this.ordenarValue)
     },
     async getCategorias(){
       let res = await axios.get("http://localhost:8080/categories/");
