@@ -156,7 +156,7 @@ export default {
   },
   methods: {
     clickCancelar() {
-      this.modalOferta=false;
+      this.$emit("cerrarOferta")
     },
     clickModificar() {
       this.$emit("modificarOferta", this.oferta.id);

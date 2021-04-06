@@ -19,7 +19,7 @@
       :idOferta="idOferta"
       :idUsuario="idUsuario"
       :empresa="empresa"
-      v-on:crearOferta="cerrarModal()"
+      v-on:crearOferta="cerrarModal"
       v-on:cerrarModal="cerrarModalYRecargarOfertas"
     ></ModalCrearOferta>
 
@@ -86,6 +86,8 @@ export default {
       this.listaOfertas=res.data;
     },
     cerrarModal() {
+            console.log("me la suda soymanolo")
+
       this.crearOferta = false;
     },
     cerrarModalYRecargarOfertas(){

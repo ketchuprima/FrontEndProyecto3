@@ -16,7 +16,7 @@
                     lazy-src="https://picsum.photos/id/11/10/6"
                     max-width="100%"
                     max-height="100%"
-                    src="https://picsum.photos/id/11/500/300"
+                    src="../assets/trabajo.jpg"
                   ></v-img>
                 </div>
                 <div></div>
