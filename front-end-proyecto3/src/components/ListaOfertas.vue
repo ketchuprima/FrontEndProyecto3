@@ -173,11 +173,12 @@ export default {
       if (res.data.message == "ok"){ this.$emit("recargarPagina"); this.modalCerrado = false;}
     },
     async rechazar(idOferta) {
+      this.modalCerrado = true;
       let res = await axios.delete(
         "http://localhost:8080/ofertes/eliminar/" + idOferta
       );
 
-      if (res.data.message == "ok") this.$emit("recargarPagina");
+      if (res.data.message == "ok"){ this.$emit("recargarPagina"); this.modalCerrado = false;}
     },
     modificarOferta(idOferta) {
       this.modalOferta = false;
