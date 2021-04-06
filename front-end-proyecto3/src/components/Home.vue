@@ -9,6 +9,7 @@
         <ListaOfertas
           :ofertas="listaOfertas"
           v-on:modificarOferta="modificarOferta"
+          :contador="contador"
         ></ListaOfertas>
       </v-col>
     </v-row>
@@ -68,7 +69,8 @@ export default {
       isEmpresa: false,
       empresa: null,
       idUsuario: 0,
-      idOferta: 0
+      idOferta: 0,
+      contador: 0
     };
   },
   methods: {
@@ -84,6 +86,7 @@ export default {
         }
       });
       this.listaOfertas=res.data;
+      this.contador++;
     },
     cerrarModal() {
             console.log("me la suda soymanolo")

@@ -91,7 +91,7 @@
             </v-row>
           </v-list-item-content>
         </v-list-item>
-        <h1 v-show="false">{{prueba}}</h1>
+        <h1 v-show="false">{{prueba}}{{contador}}</h1>
       </v-card>
     </v-col>
     <ModalVerOferta
@@ -125,7 +125,7 @@ export default {
     ModalVerOferta,
     ModalCandidatos,
   },
-  props: ["ofertas"],
+  props: ["ofertas", "contador"],
   data() {
     return {
       modalOferta: false,
@@ -136,7 +136,7 @@ export default {
       admin: false,
       inscrito: false,
       newIcon: mdiNewBox,
-      prueba: 0
+      prueba: null
     };
   },
   updated() {
@@ -145,7 +145,7 @@ export default {
     if (this.$route.name == "adminPanel") this.adminPanel = true;
   },
   mounted(){
-    this.prueba++;
+    this.prueba = "pepe";
   },
   methods: {
     abrirOferta(oferta) {
@@ -191,6 +191,7 @@ export default {
       for (let i = 0; i < this.ofertas.length; i++) {
         date2 = new Date(this.ofertas[i].data_de_publicacio);
         this.ofertas[i].antiguedad = date.getDate() - date2.getDate();
+        console.log(this.ofertas[i].antiguedad);
       }
     },
     async checkUser() {
@@ -218,7 +219,7 @@ export default {
         }
       }
 
-      this.prueba++;
+      this.prueba= "manolo";
       
     }
   },
