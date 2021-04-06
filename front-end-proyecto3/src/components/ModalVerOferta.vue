@@ -169,7 +169,6 @@ export default {
       this.oferta = res.data;
     },
     async crearCandidatura() {
-      console.log("Bearer " + localStorage.getItem("accessToken"));
       let res = await axios.post(
         "http://localhost:8080/candidats/crearCandidatura/" + this.idOferta,
         {},
@@ -179,7 +178,6 @@ export default {
           },
         }
       );
-      console.log(res.data);
       if (res.data.message == "ok") location.reload();
     },
     async enviarCurriculum() {
@@ -188,7 +186,6 @@ export default {
         const file = this.curriculum;
         const formData = new FormData();
         formData.append("curriculum", file);
-        console.log(formData);
         let res = await axios.post(
           "http://localhost:8080/candidats/enviarCV/" + this.idOferta,
           formData,
@@ -225,8 +222,6 @@ export default {
       );
 
       if (res.data.message == null) {
-              console.log("esta en null")
-
         this.crearCandidatura();
       }
     },

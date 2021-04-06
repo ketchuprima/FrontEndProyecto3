@@ -24,17 +24,19 @@
 <script>
 import ListaOfertas from "./ListaOfertas";
 import axios from "axios";
+import ModalCrearOferta from "./ModalCrearOferta";
 
 export default {
   name: "AdminPanel",
   components: {
     ListaOfertas,
+    ModalCrearOferta
   },
   data() {
     return {
       listaOfertas: null,
       idOferta:null,
-      modo:null
+      modo:null,
     };
   },
   methods: {
@@ -45,7 +47,7 @@ export default {
       let res = await axios.get("http://localhost:8080/ofertes/perValidar");
 
       this.listaOfertas = res.data;
-      if(this.listaOfertas[0].descripcio==null)
+      if(this.listaOfertas ==null)
         this.listaOfertas=null
     },
     modificarOferta(idOferta) {

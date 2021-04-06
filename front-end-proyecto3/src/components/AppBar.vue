@@ -4,7 +4,8 @@
       max-height="60"
       max-width="60"
       @click="redirigitHome()"
-      src="https://cdn.pixabay.com/photo/2017/02/15/00/48/logo-2067396_960_720.png"
+      src="../assets/logo.webp"
+      style="cursor: pointer;"
     ></v-img>
     <v-spacer></v-spacer>
     <AuthenticationModal
@@ -66,7 +67,6 @@ export default {
         for (let i = 0; i < res.data.roles.length; i++) {
           if (res.data.roles[i].nombre == "ROLE_ADMIN") this.admin = true;
         }
-        console.log(res.data);
       } else {
         this.loged = false;
         this.$router.push("/portada");

@@ -34,14 +34,14 @@
     <v-row class="rowGrey">
       <v-col>
         <v-btn tile color="blue" @click="formatear()">
-          <z class="textColorWhite">
-          Formatear</z></v-btn>
+          <span class="textColorWhite">
+          Formatear</span></v-btn>
       </v-col>
       <v-col>
         <v-btn tile color="blue" @click="filtrar()">
-          <z class="textColorWhite">
+          <span class="textColorWhite">
           Filtrar
-          </z></v-btn>
+          </span></v-btn>
       </v-col>
     </v-row>
   </v-card>

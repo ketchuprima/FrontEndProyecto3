@@ -67,11 +67,11 @@ export default {
       isEmpresa: false,
       empresa: null,
       idUsuario: 0,
+      idOferta: 0
     };
   },
   methods: {
     async filtrar(buscador,categoria,ciudad,empresa,ordenarValue){
-      console.log(buscador+categoria+ciudad+empresa+ordenarValue);
       if(empresa==0)empresa=null
       let res = await axios.get("http://localhost:8080/ofertes/filtros",{
         params:{

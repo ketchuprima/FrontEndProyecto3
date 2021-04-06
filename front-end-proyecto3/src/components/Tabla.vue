@@ -14,7 +14,7 @@
       </thead>
       <tbody>
         <tr >
-          <td v-for="categoria in categorias" :key="categoria">{{ categoria.cantidad }}</td>
+          <td v-for="categoria in categorias" :key="categoria.nombre">{{ categoria.cantidad }}</td>
         </tr>
       </tbody>
     </template>

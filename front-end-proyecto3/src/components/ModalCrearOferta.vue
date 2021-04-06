@@ -87,7 +87,6 @@ export default {
     }
   },
   mounted(){
-    console.log(this.modo);
     this.getCategorias();
   },
   methods: {
@@ -130,7 +129,6 @@ export default {
 
       for(let i=0; i<res.data.length; i++)
         this.categoriasSelect.push(res.data[i].nom);
-        console.log(this.categoriasSelect);
     },
     async getOfertaById(){
       let res = await axios.get("http://localhost:8080/ofertes/" + this.idOferta);
@@ -148,7 +146,7 @@ export default {
           this.idCategoria = this.categorias[i].id;
       }
 
-      let res = await axios.put("http://localhost:8080/ofertes/actualizar/" + this.idOferta, 
+      await axios.put("http://localhost:8080/ofertes/actualizar/" + this.idOferta, 
       {
         titol : this.titol,
         descripcio : this.descripcio,
@@ -156,8 +154,6 @@ export default {
         categoria : {id : this.idCategoria, nombre : this.categoria},
       }
       );
-
-      console.log(res.data);
     },
   },
 };

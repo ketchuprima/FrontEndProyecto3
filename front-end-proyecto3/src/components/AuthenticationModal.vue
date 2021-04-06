@@ -13,7 +13,7 @@
             grow
           >
             <v-tabs-slider color="blue"></v-tabs-slider>
-            <v-tab v-for="i in tabs" :key="i">
+            <v-tab v-for="i in tabs" :key="i.name">
               <v-icon large>{{ i.icon }}</v-icon>
               <div class="caption py-1">{{ i.name }}</div>
             </v-tab>

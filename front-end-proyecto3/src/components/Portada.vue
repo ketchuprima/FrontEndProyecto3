@@ -2,7 +2,7 @@
   <div class="portada">
     <header class="portadaHeader">
       <v-btn color="blue" tile x-large @click="modalEmpresa = !modalEmpresa"
-        ><z class="textColorWhite"> Registra tu empresa</z></v-btn
+        ><span class="textColorWhite"> Registra tu empresa</span></v-btn
       >
     </header>
     <v-row>
@@ -44,7 +44,7 @@ export default {
     return {
       dialog: false,
       modalEmpresa: false,
-      value:false,
+      value:[],
       categorias:null
     };
   },
@@ -63,10 +63,8 @@ export default {
       let res = await axios.get(
         "http://localhost:8080/ofertes/estadisticas/categorias"
       );
-      console.log(res.data);
 
       this.value = [res.data.daw, res.data.dam, res.data.asix, res.data.smix];
-      console.log(this.value)
       this.categorias=[{nombre:"DAW", cantidad: res.data.daw}, {nombre:"DAM", cantidad: res.data.dam}, {nombre:"ASIX", cantidad: res.data.asix}, {nombre:"SMX", cantidad: res.data.smix}]
     },
   },

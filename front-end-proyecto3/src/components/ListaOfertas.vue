@@ -3,9 +3,9 @@
     ><v-col cols="12" v-for="oferta in ofertas" :key="oferta.id">
       <!--v-bind:class="{nuevo: oferta.antiguedad<15,
             antiguo: oferta.antiguedad>15}" -->
-      <v-card class="mx-auto tarjeta" outlined>
+      <v-card class="mx-auto tarjeta" outlined @click="abrirOferta(oferta)">
         <v-list-item three-line>
-          <v-list-item-content @click="abrirOferta(oferta)">
+          <v-list-item-content>
             <v-row>
               <v-col cols="2">
                 <div>
@@ -23,12 +23,13 @@
               </v-col>
               <v-col cols="10" class="margen">
                 <v-card-text class="texto" style="height: 100%">
-                  <v-list-item class="titulo">{{ oferta.titol }} <v-icon class="icon" v-if="oferta.antiguedad < 15">{{ newIcon }}</v-icon></v-list-item>
+                  <v-list-item class="titulo"><span style="width: 100%">{{ oferta.titol }}</span> <v-icon class="icon" v-if="oferta.antiguedad < 15">{{ newIcon }}</v-icon></v-list-item>
                   <v-list-item class="ubicacio">
                     <div>
                       <p>
                         {{ oferta.empresa.nom }}, {{ oferta.ubicacio }} |
-                        {{ oferta.data_de_publicacio.split(" ")[0] }}
+                        {{ oferta.data_de_publicacio.split(" ")[0] }} |
+                        {{oferta.categoria.nom}}
                       </p>
                       <div v-if="admin == true">
                         {{ oferta.empresa.correu }}
@@ -61,7 +62,7 @@
                   medium
                   depressed
                 >
-                  <z class="textColorWhite">Candidaturas</z></v-btn
+                  <span class="textColorWhite">Candidaturas</span></v-btn
                 >
                 <div class="botones">
                   <v-btn
@@ -133,22 +134,24 @@ export default {
       admin: false,
       inscrito: false,
       newIcon: mdiNewBox,
-      prueba: null
+      prueba: 0
     };
   },
   updated() {
-    console.log("actualizado bro");
     this.checkUser();
     this.getAntiguedad();
     if (this.$route.name == "adminPanel") this.adminPanel = true;
   },
+  mounted(){
+    this.prueba++;
+  },
   methods: {
     abrirOferta(oferta) {
-      this.modalOferta = true;
-      this.idOferta = oferta.id;
-      this.inscrito = !oferta.participado;
-      console.log(oferta);
-      console.log(this.inscrito);
+      if(!this.modalCandidatura){
+        this.modalOferta = true;
+        this.idOferta = oferta.id;
+        this.inscrito = !oferta.participado;
+      }
     },
     cerrarOferta() {
       this.modalOferta = false;
@@ -166,7 +169,6 @@ export default {
       );
 
       if (res.data.message == "ok") this.$emit("recargarPagina");
-      else alert(res.data.message);
     },
     async rechazar(idOferta) {
       let res = await axios.delete(
@@ -174,7 +176,6 @@ export default {
       );
 
       if (res.data.message == "ok") this.$emit("recargarPagina");
-      else alert(res.data.message);
     },
     modificarOferta(idOferta) {
       this.modalOferta = false;
@@ -212,7 +213,9 @@ export default {
           else this.ofertas[i].participado = false;
         }
       }
-      this.prueba="xds";
+
+      this.prueba++;
+      
     },
   },
 };

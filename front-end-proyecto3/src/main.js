@@ -14,8 +14,8 @@ Vue.use(VueRouter);
 const routes = [
   {path: '/home', name: 'home',component: Home},
   {path: '', name: 'portada', component: Portada},
-  {path: '/', name: 'portada', component: Portada},
-  {path: '/portada', name: 'portada', component: Portada},
+  {path: '/', name: 'portada2', component: Portada},
+  {path: '/portada', name: 'portada3', component: Portada},
   {path: '/adminPanel', name: 'adminPanel', component: AdminPanel},
   {path: '/maykheltesting', component: Modal},
 
