@@ -101,6 +101,7 @@
       :admin="admin"
       :inscrito="inscrito"
       v-on:modificarOferta="modificarOferta"
+      v-on:cerrarOferta="cerrarOferta"
     ></ModalVerOferta>
     <ModalCandidatos
       v-if="modalCandidatura"
