@@ -177,9 +177,9 @@ export default {
             logo: "logo.png",
             correu: this.emailContacto,
           },
-          { headers: { empresa: true } }
+          { params: { empresa: "empresa" } }
         );
-        if (res.data.message == "El usuario ha sido registrado correctamente")
+        if (res.data.message == "El usuario ha sido registrado correctamente" || res.data.message == "Usuario y empresa creados correctamente")
           location.reload();
         else this.message = res.data.message;
       }

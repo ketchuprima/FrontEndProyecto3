@@ -2,8 +2,12 @@
   <div class="text-xs-center">
     <v-dialog persistent v-model="crearOferta" width="800">
       <v-card>
-        <v-card-title class="headline grey lighten-2" primary-title>
-          Crear una oferta
+        <v-card-title class="headline grey lighten-2" primary-title v-if="modo == 0">
+          Actualizar oferta
+        </v-card-title>
+
+        <v-card-title class="headline grey lighten-2" primary-title v-else>
+          Crear oferta
         </v-card-title>
 
         <div class="contenerdorFormularioCrearOferta" style="margin: 3%">
@@ -154,6 +158,8 @@ export default {
         categoria : {id : this.idCategoria, nombre : this.categoria},
       }
       );
+      this.crearOferta = false;
+      this.$emit("cerrarModal");
     },
   },
 };

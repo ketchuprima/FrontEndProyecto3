@@ -100,7 +100,6 @@
       :idOferta="idOferta"
       :admin="admin"
       :inscrito="inscrito"
-      v-on:cerrarOferta="cerrarOferta"
       v-on:modificarOferta="modificarOferta"
     ></ModalVerOferta>
     <ModalCandidatos
@@ -108,6 +107,7 @@
       :modal="modalCandidatura"
       :idOferta="idOferta"
       v-on:cerrarCandidatos="cerrarCandidatos"
+      v-on:cerrarModal="recargarOfertas"
     >
     </ModalCandidatos>
   </v-row>
@@ -129,6 +129,7 @@ export default {
     return {
       modalOferta: false,
       modalCandidatura: false,
+      modalCerrado: false,
       idOferta: null,
       adminPanel: false,
       admin: false,
@@ -147,7 +148,7 @@ export default {
   },
   methods: {
     abrirOferta(oferta) {
-      if(!this.modalCandidatura){
+      if(!this.modalCandidatura && !this.modalCerrado){
         this.modalOferta = true;
         this.idOferta = oferta.id;
         this.inscrito = !oferta.participado;
@@ -164,11 +165,12 @@ export default {
       this.idOferta = oferta.id;
     },
     async aceptar(idOferta) {
+      this.modalCerrado = true;
       let res = await axios.put(
         "http://localhost:8080/ofertes/actualizarEstado/" + idOferta
       );
 
-      if (res.data.message == "ok") this.$emit("recargarPagina");
+      if (res.data.message == "ok"){ this.$emit("recargarPagina"); this.modalCerrado = false;}
     },
     async rechazar(idOferta) {
       let res = await axios.delete(
@@ -216,7 +218,7 @@ export default {
 
       this.prueba++;
       
-    },
+    }
   },
 };
 </script>

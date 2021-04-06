@@ -20,6 +20,7 @@
       :idUsuario="idUsuario"
       :empresa="empresa"
       v-on:crearOferta="cerrarModal()"
+      v-on:cerrarModal="cerrarModalYRecargarOfertas"
     ></ModalCrearOferta>
 
     <v-card-text
@@ -86,6 +87,10 @@ export default {
     },
     cerrarModal() {
       this.crearOferta = false;
+    },
+    cerrarModalYRecargarOfertas(){
+      this.crearOferta = false;
+      this.getOfertas();
     },
     modificarOferta(idOferta) {
       this.crearOferta = true;
