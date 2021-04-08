@@ -1,6 +1,6 @@
 <template>
   <v-row class="flexible" v-if="ofertas.length != 0"
-    ><v-col cols="12" v-for="oferta in ofertas" :key="oferta.id">
+    ><v-col cols="12" v-for="oferta in paginador(ofertas)" :key="oferta.id">
       <!--v-bind:class="{nuevo: oferta.antiguedad<15,
             antiguo: oferta.antiguedad>15}" -->
       <v-card class="mx-auto tarjeta" outlined @click="abrirOferta(oferta)">
@@ -111,7 +111,15 @@
       v-on:cerrarModal="recargarOfertas"
     >
     </ModalCandidatos>
-    
+    <v-col cols="12">
+      <div class="text-center">
+        <v-pagination
+          v-model="page"
+          :length="Math.ceil(ofertas.length/5)"
+          :total-visible="itemsPorPage"
+        ></v-pagination>
+      </div>
+    </v-col>
   </v-row>
   <span v-else>No hay ofertas con estos filtros</span>
 </template>
@@ -137,7 +145,9 @@ export default {
       admin: false,
       inscrito: false,
       newIcon: mdiNewBox,
-      prueba: null
+      prueba: null,
+      page: 1,
+      itemsPorPage: 5
     };
   },
   updated() {
@@ -149,6 +159,14 @@ export default {
     this.prueba = "pepe";
   },
   methods: {
+    paginador(items){
+      const indiceInicio = (this.page - 1) * this.itemsPorPage;
+      const indiceFinal =
+        indiceInicio + this.itemsPorPage > items.length
+          ? items.length
+          : indiceInicio  + this.itemsPorPage;
+      return items.slice(indiceInicio , indiceFinal );
+    },
     abrirOferta(oferta) {
       if(!this.modalCandidatura && !this.modalCerrado){
         this.modalOferta = true;
@@ -192,7 +210,6 @@ export default {
       for (let i = 0; i < this.ofertas.length; i++) {
         date2 = new Date(this.ofertas[i].data_de_publicacio);
         this.ofertas[i].antiguedad = date.getDate() - date2.getDate();
-        console.log(this.ofertas[i].antiguedad);
       }
     },
     async checkUser() {
