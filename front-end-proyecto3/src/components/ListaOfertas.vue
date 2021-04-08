@@ -6,8 +6,8 @@
       <v-card class="mx-auto tarjeta" outlined @click="abrirOferta(oferta)">
         <v-list-item three-line>
           <v-list-item-content>
-            <v-row>
-              <v-col cols="2">
+            <v-row style="width: 100%;">
+              <v-col cols="3">
                 <div>
                   <v-img
                     class="foto"
@@ -21,7 +21,7 @@
                 </div>
                 <div></div>
               </v-col>
-              <v-col cols="10" class="margen">
+              <v-col cols="9" class="margen">
                 <v-card-text class="texto" style="height: 100%">
                   <v-list-item class="titulo"><span style="width: 100%">{{ oferta.titol }}</span> <v-icon class="icon" v-if="oferta.antiguedad < 15">{{ newIcon }}</v-icon></v-list-item>
                   <v-list-item class="ubicacio">
@@ -111,6 +111,7 @@
       v-on:cerrarModal="recargarOfertas"
     >
     </ModalCandidatos>
+    
   </v-row>
   <span v-else>No hay ofertas con estos filtros</span>
 </template>
