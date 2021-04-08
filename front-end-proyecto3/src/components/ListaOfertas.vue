@@ -113,7 +113,7 @@
     </ModalCandidatos>
     <v-col cols="12">
       <div class="text-center">
-        <v-pagination
+        <v-pagination v-if="ofertas.length>5"
           v-model="page"
           :length="Math.ceil(ofertas.length/5)"
           :total-visible="itemsPorPage"
